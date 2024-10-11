@@ -1,25 +1,45 @@
-import logo from './logo.svg';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Sidebar from './Components/Sidebar';
+import Navbar from './Components/Navbar';
+import Header from './Components/Header';
+import Overview from './Screens/Overview';
+import Solar from './Screens/Solar';
+import Wind from './Screens/Wind';
+import Biogas from './Screens/Biogas';
+import Mains from './Screens/Mains';
+import Genset from './Screens/Genset';
+import Alerts from './Screens/Alert';
+import Ess from './Screens/Ess';
 import './App.css';
 
-function App() {
+const App = () => {
+  const BaseUrl = "http://localhost:5000/micro"
+  const Url = "http://13.126.205.156/micro"
+  
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div className="flex h-screen custom-body">
+        <Sidebar />
+        <div className="flex flex-col flex-grow ml-12 transition-all duration-300">
+          <Navbar />
+          <Header />
+          <div className="content flex-grow p-2  bg-gradient-to-r from-custom-green to-custom-dark">
+            <Routes>
+              <Route path="/" element={<Overview BaseUrl = {BaseUrl} Url={Url}/>} />
+              <Route path="/solar" element={<Solar BaseUrl = {BaseUrl} Url={Url}/>} />
+              <Route path="/wind" element={<Wind BaseUrl = {BaseUrl}/>} Url={Url}/>
+              <Route path="/biogas" element={<Biogas BaseUrl = {BaseUrl} Url={Url}/>} />
+              <Route path="/mains" element={<Mains BaseUrl = {BaseUrl} Url={Url}/>} />
+              <Route path="/genset" element={<Genset BaseUrl = {BaseUrl} Url={Url}/>} />
+              <Route path="/ess" element={<Ess BaseUrl = {BaseUrl}/>} Url={Url}/>
+              <Route path="/alerts" element={<Alerts BaseUrl = {BaseUrl} Url={Url}/>} />
+            </Routes>
+          </div>
+        </div>
+      </div>
+    </Router>
   );
-}
+};
 
 export default App;
