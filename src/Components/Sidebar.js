@@ -1,5 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { PiFireSimpleBold } from "react-icons/pi";
+import { LuActivity } from "react-icons/lu";
+import { GoImage } from "react-icons/go";
+import { TbCloudDownload } from "react-icons/tb";
+import { FiPieChart } from "react-icons/fi";
+import { RiCalendarTodoLine } from "react-icons/ri";
 
 const Sidebar = () => {
   return (
@@ -11,35 +17,35 @@ const Sidebar = () => {
           </Link>
         </li>
         <li className="mt-2">
-              <Link to="#">
-                <img src="./assets/Pie_Chart.png" alt="Pie Chart" className="w-5 h-5" />
-              </Link>
-            </li>
-            <li className="mt-4">
-              <Link to="#">
-                <img src="./assets/Download.png" alt="Download" className="w-5 h-5" />
-              </Link>
-            </li>
-            <li className="mt-4">
-              <Link to="#">
-                <img src="./assets/Activity.png" alt="Download" className="w-5 h-5" />
-              </Link>
-            </li>
-            <li className="mt-4">
-              <Link to="#">
-                <img src="./assets/Image.png" alt="Download" className="w-5 h-5" />
-              </Link>
-            </li>
-            <li className="mt-4">
-              <Link to="#">
-                <img src="./assets/Calendar.png" alt="Download" className="w-5 h-5" />
-              </Link>
-            </li>
-            <li className="mt-4">
-              <Link to="#">
-                <img src="./assets/Fire.png" alt="Download" className="w-6 h-6" />
-              </Link>
-            </li>
+          <Link to="#">
+          <FiPieChart color='white' className='w-5 h-5'/>
+          </Link>
+        </li>
+        <li className="mt-4">
+          <Link to="#">
+          <TbCloudDownload color='#7A7F7F' className='w-5 h-5'/>
+          </Link>
+        </li>
+        <li className="mt-4">
+          <Link to="#">
+          <LuActivity color='#7A7F7F' className='w-5 h-5'/>
+          </Link>
+        </li>
+        <li className="mt-4">
+          <Link to="#">
+          <GoImage color='#7A7F7F' className='w-5 h-5'/>
+          </Link>
+        </li>
+        <li className="mt-4">
+          <Link to="#">
+            <RiCalendarTodoLine color='#7A7F7F' className='w-5 h-5 font-bold'/>
+          </Link>
+        </li>
+        <li className="mt-4">
+          <Link to="#">
+            <PiFireSimpleBold color='#7A7F7F' className='w-5 h-5 font-bold' />
+          </Link>
+        </li>
       </ul>
     </div>
   );
