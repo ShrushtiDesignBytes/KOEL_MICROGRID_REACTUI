@@ -97,7 +97,7 @@ const Ess = ({ BaseUrl, Url }) => {
                     </div>
                 </div>
 
-                <div className="grid grid-rows-[25%_25%_47%] gap-4">
+                <div className="grid grid-rows-[25%_25%_45%] gap-4">
                     <div className="grid grid-cols-4 gap-2 mt-1">
                         <div className="bg-[#051E1C] rounded-lg flex flex-col items-center justify-center">
                             <p className="text-xs xl:text-sm text-[#C37C5A] font-medium text-center">Operating Hours</p>
@@ -147,7 +147,7 @@ const Ess = ({ BaseUrl, Url }) => {
                             </div>
                         </div>
                     </div>
-                    <div className="flex justify-between gap-5 rounded-lg mt-1">
+                    <div className="flex justify-between gap-3 rounded-lg">
                         {/* SOC Section */}
                         <div className="bg-[#030F0E] p-4 rounded-lg flex-1 text-center font-sans">
                             <div className="flex justify-between mb-2">
@@ -206,7 +206,7 @@ const Ess = ({ BaseUrl, Url }) => {
                         </div>
 
                         {/* Energy Consumption Section */}
-                        <div className="bg-[#030F0E] p-4 rounded-lg flex-1 mt-4">
+                        <div className="bg-[#030F0E] p-4 rounded-lg flex-1">
                             <h5 className="text-[#CACCCC] xl:text-base font-semibold text-base mb-5 flex justify-between">
                                 Energy Consumption
                             </h5>

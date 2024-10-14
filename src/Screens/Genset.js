@@ -2,7 +2,7 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
 import React, { useEffect, useState } from 'react';
 
-const Genset = ({BaseUrl, Url}) => {
+const Genset = ({ BaseUrl, Url }) => {
     const [data, setData] = useState({})
     const [alertsData, setAlertsData] = useState([]);
     const [alertCount, setAlertCount] = useState(0);
@@ -39,7 +39,7 @@ const Genset = ({BaseUrl, Url}) => {
     const updateData = async (newData) => {
         try {
             const response = await fetch(`${Url}/genset/1`, {
-                method: 'PATCH', 
+                method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
                 },
@@ -61,11 +61,11 @@ const Genset = ({BaseUrl, Url}) => {
         fetchAlerts();
 
         updateData(data)
-        
+
         const interval = setInterval(fetchAlerts, 1000);
 
         return () => clearInterval(interval);
-      }, [data]);
+    }, [data]);
 
 
     const displayCounts = (data) => {
@@ -76,10 +76,20 @@ const Genset = ({BaseUrl, Url}) => {
         setShutdownCount(shutdown.length);
     };
     return (
-      !loading &&  <div className="p-4">
+        !loading && <div className="p-4">
             <div className="grid grid-cols-2 gap-5">
-                <div className="relative">
-                    <img id="overview-image" src="assets/genset.svg" width="100%" alt="overview" className="rounded-image block w-full h-full object-cover rounded-image" />
+                <div className="relative w-full h-full rounded-md bg-gradient-to-t from-custom-dark-image to-custom-green-image flex items-center justify-center">
+                    {/* Image Section */}
+                    <div className="w-fit h-fit lg:w-11/12 lg:h-3/4">
+                        <img
+                            id="overview-image"
+                            src="assets/genset_n.png"
+                            alt="overview"
+                            className="block w-full h-full object-contain"
+                        />
+                    </div>
+
+                    {/* Icon Section */}
                     <div className="absolute top-7 left-5 transform -translate-x-1/5 translate-y-1/5 p-1.5 bg-transparent text-white rounded z-10 flex items-center max-w-[calc(100%-40px)]">
                         <div className="mr-2.5">
                             <img src="assets/Group.png" className="max-h-1/2 max-w-full" alt="Group Icon" />
@@ -87,7 +97,7 @@ const Genset = ({BaseUrl, Url}) => {
                     </div>
                 </div>
 
-                <div className="grid grid-rows-[25%_25%_47%] gap-4">
+                <div className="grid grid-rows-[25%_25%_45%] gap-4">
                     <div className="grid grid-cols-4 gap-2 mt-1">
                         <div className="bg-[#051E1C] rounded-lg flex flex-col items-center justify-center">
                             <p className="text-xs xl:text-sm text-[#C37C5A] font-medium text-center">Operating Hours</p>
@@ -118,7 +128,7 @@ const Genset = ({BaseUrl, Url}) => {
                             <div className="bg-[#F12D2D] h-[10px] w-[90%] mr-[10px] ml-0"></div>
                             <div className="h-[10px] w-[90%] mr-[10px] ml-0 bg-[#FD9C2B]"></div>
                             <div className="h-[10px] w-[90%] mr-[10px] ml-0 bg-[#FCDE2D] relative">
-                            <div className="absolute -top-[1.75rem] flex flex-col items-center justify-center" style={{ left: `${data.healthIndex}%` }}>
+                                <div className="absolute -top-[1.75rem] flex flex-col items-center justify-center" style={{ left: `${data.healthIndex}%` }}>
                                     <p className="text-white m-0 p-0 text-sm">{data.healthIndex}</p>
                                     <img src="assets/arrow.png" alt="Arrow" className="w-5 h-5 mt-1" />
                                 </div>
@@ -138,13 +148,13 @@ const Genset = ({BaseUrl, Url}) => {
                         </div>
                     </div>
 
-                    <div className="flex justify-between gap-5 rounded-lg mt-1">
+                    <div className="flex justify-between gap-3 rounded-lg">
                         {/* SOC Section */}
                         <div className="bg-[#030F0E] p-4 rounded-lg flex-1">
                             <div className="flex flex-col items-start ml-2">
                                 <h5 className="text-[#CACCCC] text-lg flex font-semibold">Fuel</h5>
-                                <div className="mt-6 mb-5">
-                                    <div className="w-52 h-12 flex items-center justify-center">
+                                <div className="mt-4 mb-3">
+                                    <div className="w-44 h-12 flex items-center justify-center">
                                         <div className="progress-4"></div>
                                     </div>
                                 </div>
@@ -154,7 +164,7 @@ const Genset = ({BaseUrl, Url}) => {
                         </div>
 
                         {/* Energy Consumption Section */}
-                        <div className="bg-[#030F0E] p-4 rounded-lg flex-1 mt-4">
+                        <div className="bg-[#030F0E] p-4 rounded-lg flex-1">
                             <h5 className="text-[#CACCCC] xl:text-base font-semibold text-base mb-5 flex justify-between">
                                 Energy Consumption
                             </h5>
