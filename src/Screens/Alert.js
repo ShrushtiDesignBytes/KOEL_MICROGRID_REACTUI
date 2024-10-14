@@ -12,8 +12,30 @@ const Alert = ({BaseUrl, Url}) => {
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
+
             const data = await response.json();
-            console.log(data)
+            console.log(data) 
+          
+            const now = new Date();
+            const fiveDaysAgo = new Date();
+            fiveDaysAgo.setDate(now.getDate() - 5); // Set threshold to 5 days ago
+    
+            // Helper function to parse the "DD-MM-YY | HH:MM AM/PM" format to a JavaScript Date object
+            const parseDateTime = (dateTimeString) => {
+                const [datePart, timePart] = dateTimeString.split(" | ");
+                const [day, month, year] = datePart.split("-").map(Number);
+                const dateFormatted = `${month}-${day}-${"20" + year} ${timePart}`; // Convert to MM-DD-YYYY format for Date constructor
+                return new Date(dateFormatted);
+            };
+    
+            // Filter the data to include only notifications from the last 5 days
+            const recentNotifications = data.filter(notification => {
+                const notificationDate = parseDateTime(notification.date_time); // Convert the date string to Date object
+                return notificationDate >= fiveDaysAgo; // Compare with the 5-day threshold
+            });
+    
+            console.log(recentNotifications);
+           
             setNotifications(data);
             sendNotifications(data);
         } catch (error) {
