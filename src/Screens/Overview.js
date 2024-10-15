@@ -124,11 +124,11 @@ const Overview = ({ BaseUrl, Url }) => {
         d3.select(myDatavizRef.current).selectAll('svg').remove();
 
         // Set dimensions and margins
-        const margin = { top: 20, right: 30, bottom: 50, left: 20 };
+        const margin = { top: 20, right: 30, bottom: 20, left: 20 };
         const width = myDatavizRef.current.parentElement.offsetWidth
             ? myDatavizRef.current.parentElement.offsetWidth - margin.left - margin.right
             : 500; // Fallback width
-        const height = 200 - margin.top - margin.bottom;
+        const height = 300 - margin.top - margin.bottom;
 
         // If the parent element width is 0, delay the rendering until the element is visible
         if (width <= 0) {
@@ -152,7 +152,7 @@ const Overview = ({ BaseUrl, Url }) => {
         svg.append('g')
             .attr('transform', `translate(0, ${height})`)
             .call(d3.axisBottom(x).ticks(9).tickFormat(d => formatAMPM(d)))
-            .selectAll('text').style('fill', 'white');
+            .selectAll('text').style('fill', 'white').style('font-size', width > 1500 ? '14px' : '12px');
 
         // Y axis
         svg.append('g')
@@ -284,7 +284,7 @@ const Overview = ({ BaseUrl, Url }) => {
                 {/* Left Section */}
                 <div>
                     <div
-                        className="grid grid-cols-1 sm:grid-cols-3 transition-transform duration-500 gap-3 h-[45vh]"
+                        className="grid grid-cols-1 sm:grid-cols-3 transition-transform duration-500 gap-3 h-[50vh]"
                         style={{ transform: `translateX(-${currentIndex * 100}%)` }}
                     >
                         {images.map((image, index) => (
@@ -326,13 +326,13 @@ const Overview = ({ BaseUrl, Url }) => {
                 {/* Right Section */}
                 <div className="rounded mt-2 bg-[#030F0E] p-5" id="grid-it-rl2">
                     <div className="flex justify-between mb-4">
-                        <h5 className="text-base text-white">Energy Generated Today</h5>
-                        <p className="text-[#7A7F7F] text-sm font-normal">Updated 15 min ago</p>
+                        <h5 className="text-base xl:text-lg text-white">Energy Generated Today</h5>
+                        <p className="text-[#7A7F7F] text-sm xl:text-base font-normal">Updated 15 min ago</p>
                     </div>
 
-                    <p className="mt-2 text-white text-base font-light mb-5">
+                    <p className="mt-2 text-white text-base xl:text-lg font-light mb-5">
                         Total Daily Generation:
-                        <span className="bg-[#0821FF] text-sm rounded-full px-3 py-1 ml-2 inline-block font-extralight">
+                        <span className="bg-[#0821FF] text-sm xl:text-base rounded-full px-3 py-1 ml-2 inline-block font-extralight">
                         {data.daily_generation} kWh
                         </span>
                     </p>
@@ -349,7 +349,7 @@ const Overview = ({ BaseUrl, Url }) => {
 
             <div className="grid grid-cols-[35.5%_63%] gap-4 pt-2">
                 <div className="pie">
-                    <div className="text-white flex mb-5">Energy Generation Comparison</div>
+                    <div className="text-white flex mb-5 text-lg xl:text-xl">Energy Generation Comparison</div>
 
                     <div className="bg-[#051e1c] rounded-lg mt-4 h-[89%]">
                         <div className="flex justify-center items-center w-[250px] h-[250px] relative mx-auto">
@@ -392,10 +392,10 @@ const Overview = ({ BaseUrl, Url }) => {
                 </div>
 
                 <div className="flex flex-col">
-                    <div className="text-white flex mb-2 text-lg">Energy Resources</div>
+                    <div className="text-white flex mb-2 text-lg xl:text-xl ">Energy Resources</div>
                     <div className="grid-item-left-down2 text-white">
                         <table className="table-auto w-full border-separate border-spacing-y-3">
-                            <thead className="text-sm font-light">
+                            <thead className="text-sm xl:text-base font-light">
                                 <tr>
                                     <td className="whitespace-nowrap">Energy Source</td>
                                     <td>Operating Hours</td>
@@ -413,13 +413,13 @@ const Overview = ({ BaseUrl, Url }) => {
                                     { src: './assets/Icons-u.png', name: 'Mains', hours: data.mains.operatinghours + ' hrs', power: data.mains.powergenerated + ' kWh', cost: data.mains.cost, costColor: '#EB5757' },
                                 ].map((item, index) => (
                                     <tr key={index}>
-                                        <td className="bg-[#051E1C] text-[#CACCCC] text-base flex items-center gap-2 p-4 rounded-tl-lg rounded-bl-lg">
+                                        <td className="bg-[#051E1C] text-[#CACCCC] text-base xl:text-lg flex items-center gap-2 p-4 rounded-tl-lg rounded-bl-lg">
                                             <img src={item.src} alt={item.name} />
                                             {item.name}
                                         </td>
-                                        <td className="bg-[#051E1C] text-[#CACCCC] text-base">{item.hours}</td>
-                                        <td className="bg-[#051E1C] text-[#CACCCC] text-base">{item.power}</td>
-                                        <td className="bg-[#051E1C] text-[#CACCCC] text-base rounded-tr-lg rounded-br-lg" style={{ color: item.costColor }}>{item.cost}</td>
+                                        <td className="bg-[#051E1C] text-[#CACCCC] text-base xl:text-lg">{item.hours}</td>
+                                        <td className="bg-[#051E1C] text-[#CACCCC] text-base xl:text-lg">{item.power}</td>
+                                        <td className="bg-[#051E1C] text-[#CACCCC] text-base xl:text-lg rounded-tr-lg rounded-br-lg" style={{ color: item.costColor }}>{item.cost}</td>
                                     </tr>
                                 ))}
                             </tbody>
@@ -435,14 +435,14 @@ const Overview = ({ BaseUrl, Url }) => {
                         <img src="assets/Vector 3.svg" className="p-1.5 w-[160px]" alt='image' />
                         <div className="flex flex-col items-start p-1.5 ml-2.5">
                             <h6 id="avg-kw" className="text-white text-lg mb-1.5">{data.average_power_kw} kW</h6>
-                            <p className="text-[#7A7F7F] text-sm mb-1.5">Average Power (kWh)</p>
+                            <p className="text-[#7A7F7F] text-sm xl:text-base mb-1.5">Average Power (kWh)</p>
                         </div>
                     </div>
                     <div className="bg-[#051e1c] rounded-lg flex flex-col justify-around items-center">
                         <img src="assets/Frame 1000001841.svg" className="p-1.5 w-[160px]" alt='image' />
                         <div className="flex flex-col items-start p-1.5 ml-2.5">
                             <h6 id="avg-kv" className="text-white text-lg mb-1.5">{data.average_power_kva} kW</h6>
-                            <p className="text-[#7A7F7F] text-sm mb-1.5 ">Average Power (kVA)</p>
+                            <p className="text-[#7A7F7F] text-sm xl:text-base mb-1.5 ">Average Power (kVA)</p>
                         </div>
                     </div>
                 </div>
@@ -450,21 +450,21 @@ const Overview = ({ BaseUrl, Url }) => {
                     <div className="bg-[#051e1c] rounded-lg flex flex-col justify-between p-5">
                         <div className="flex items-center">
                             <img src="assets/Icons.svg" className="pr-2.5" alt='image' />
-                            <h6 className="text-base font-medium text-white">Mains</h6>
+                            <h6 className="text-base xl:text-lg font-medium text-white">Mains</h6>
                         </div>
                         <div className="flex justify-between items-start flex-row mt-5 ">
-                            <p className="text-[#7A7F7F] text-sm">Operated Yesterday</p>
-                            <p id="mains" className="text-[#CACCCC] text-base ml-1 whitespace-nowrap">{data.mains_operated_yesterday} Hrs</p>
+                            <p className="text-[#7A7F7F] text-sm xl:text-base">Operated Yesterday</p>
+                            <p id="mains" className="text-[#CACCCC] text-base xl:text-lg ml-1 whitespace-nowrap">{data.mains_operated_yesterday} Hrs</p>
                         </div>
                     </div>
                     <div className="bg-[#051e1c] rounded-lg flex flex-col justify-between p-5">
                         <div className="flex items-center">
                             <img src="assets/Icons (2).svg" className="pr-2.5" alt='image' />
-                            <h6 className="text-base font-medium text-white">Genset</h6>
+                            <h6 className="text-base xl:text-lg font-medium text-white">Genset</h6>
                         </div>
                         <div className="flex justify-between items-start flex-row mt-5">
-                            <p className="text-[#7A7F7F] text-sm">Operated Yesterday</p>
-                            <p id="genset" className="text-[#CACCCC] text-base ml-1 whitespace-nowrap">{data.genset_operated_yesterday} Hrs</p>
+                            <p className="text-[#7A7F7F] text-sm xl:text-base">Operated Yesterday</p>
+                            <p id="genset" className="text-[#CACCCC] text-base xl:text-lg ml-1 whitespace-nowrap">{data.genset_operated_yesterday} Hrs</p>
                         </div>
                     </div>
                 </div>
@@ -477,7 +477,7 @@ const Overview = ({ BaseUrl, Url }) => {
                                 <text x="18" y="20.35" textAnchor="middle" fontSize="8px" fill="white" fontFamily="Arial" id="ess">{data.ess_energy_stored}%</text>
                             </svg>
                         </div>
-                        <p className="text-sm text-[#CACCCC] ml-5">Energy Stored (ESS)</p>
+                        <p className="text-sm xl:text-base text-[#CACCCC] ml-5">Energy Stored (ESS)</p>
                     </div>
                     <div className="bg-[#051e1c] rounded-lg flex justify-start items-center p-[26px] h-full">
                         <div>
@@ -487,25 +487,25 @@ const Overview = ({ BaseUrl, Url }) => {
                                 <text x="18" y="20.35" textAnchor="middle" fontSize="8px" fill="white" fontFamily="Arial" id="soc">{data.soc_ess}%</text>
                             </svg>
                         </div>
-                        <p className="text-sm text-[#CACCCC] ml-5">SOC (ESS)</p>
+                        <p className="text-sm xl:text-base text-[#CACCCC] ml-5">SOC (ESS)</p>
                     </div>
                 </div>
                 <div className="flex flex-col h-full">
                     <div className="p-4 flex flex-col justify-evenly bg-[#051e1c] rounded-lg h-full">
                         <div className="flex items-center">
                             <img src="assets/dollar.svg" className="w-[35px]" alt='image' />
-                            <p className="text-white ml-2.5">Savings</p>
+                            <p className="text-white ml-3">Savings</p>
                         </div>
-                        <div className="p-2.5 flex flex-col justify-between">
-                            <div className="mt-2.5">
-                                <p id="savings" className="text-white my-1.5 text-lg">INR {data.savings.savings}</p>
-                                <p className="text-[#959999] mt-1.5 text-xs">(per month)</p>
+                        {/* <div className="p-3 flex flex-col justify-between"> */}
+                            <div className="mt-2 ml-2">
+                                <p id="savings" className="text-white my-1.5 text-lg xl:text-xl">INR {data.savings.savings}</p>
+                                <p className="text-[#959999] mt-1.5 text-xs xl:text-sm">(per month)</p>
                             </div>
-                            <div className="mt-2.5">
-                                <p id="savingt" className="text-white my-1.5 text-lg">INR {data.savings.savingt}</p>
-                                <p className="text-[#959999] my-1.5 text-xs">(till date)</p>
+                            <div className="mt-4 ml-2">
+                                <p id="savingt" className="text-white my-1.5 text-lg xl:text-xl">INR {data.savings.savingt}</p>
+                                <p className="text-[#959999] my-1.5 text-xs xl:text-sm">(till date)</p>
                             </div>
-                        </div>
+                        {/* </div> */}
                     </div>
                 </div>
             </div>
@@ -523,12 +523,12 @@ const Overview = ({ BaseUrl, Url }) => {
 
                         <div className="mb-0">
                             <div className="flex items-center justify-between ml-5 mb-3">
-                                <p className="text-sm text-[#AFB2B2] m-0">From Renewable Resources</p>
-                                <p className="text-sm text-[#AFB2B2] m-0 ml-2.5 whitespace-nowrap" id="renew">{data.energy.renewable} (kWh)</p>
+                                <p className="text-sm xl:text-base text-[#AFB2B2] m-0">From Renewable Resources</p>
+                                <p className="text-sm xl:text-base text-[#AFB2B2] m-0 ml-2.5 whitespace-nowrap" id="renew">{data.energy.renewable} (kWh)</p>
                             </div>
                             <div className="flex items-center justify-between ml-5 mb-0">
-                                <p className="text-sm text-[#AFB2B2] m-0">From Non-Renewable Resources</p>
-                                <p className="text-sm text-[#AFB2B2] m-0 ml-2.5 whitespace-nowrap" id="non-renew">{data.energy.nonrenewable} (kWh)</p>
+                                <p className="text-sm xl:text-base text-[#AFB2B2] m-0">From Non-Renewable Resources</p>
+                                <p className="text-sm xl:text-base text-[#AFB2B2] m-0 ml-2.5 whitespace-nowrap" id="non-renew">{data.energy.nonrenewable} (kWh)</p>
                             </div>
                         </div>
                     </div>
@@ -537,14 +537,14 @@ const Overview = ({ BaseUrl, Url }) => {
                 <div className="grid grid-rows-2 gap-4">
                     <div className="bg-[#051e1c] rounded-lg p-5 flex items-center justify-between">
                         <div className="h-2.5 w-2.5 bg-[#FFAF12] rounded-full"></div>
-                        <p className="text-[#7A7F7F] text-base">Alerts</p>
-                        <div className="text-white text-xl" id="alerts">{data.alerts}</div>
+                        <p className="text-[#7A7F7F] text-base xl:text-lg">Alerts</p>
+                        <div className="text-white text-xl xl:text-2xl" id="alerts">{data.alerts}</div>
                     </div>
 
                     <div className="bg-[#051e1c] rounded-lg p-5 flex items-center justify-between">
                         <div className="h-2.5 w-2.5 bg-red-600 rounded-full"></div>
-                        <p className="text-[#7A7F7F] text-base">Shutdowns</p>
-                        <div className="text-white text-xl" id="shutdown">{data.shutdown}</div>
+                        <p className="text-[#7A7F7F] text-base xl:text-lg">Shutdowns</p>
+                        <div className="text-white text-xl xl:text-2xl" id="shutdown">{data.shutdown}</div>
 
                     </div>
                 </div>
@@ -553,22 +553,22 @@ const Overview = ({ BaseUrl, Url }) => {
                     <div className="flex-1 bg-[#051e1c] rounded-lg p-2">
                         <img src="assets/Icons (9).svg" className="p-3" alt="Current Icon" />
                         <div className="flex flex-col justify-center mt-5">
-                            <h6 id="av-current" className="text-white text-xl ml-2 mb-5 font-semibold">{data.av_current_amp}A</h6>
-                            <p className="text-sm text-[#7A7F7F] ml-2">Average Current (Amp.)</p>
+                            <h6 id="av-current" className="text-white text-xl xl:text-2xl ml-2 mb-5 font-semibold">{data.av_current_amp}A</h6>
+                            <p className="text-sm xl:text-base text-[#7A7F7F] ml-2">Average Current (Amp.)</p>
                         </div>
                     </div>
                     <div className="flex-1 bg-[#051e1c] rounded-lg p-2">
                         <img src="assets/Icons (8).svg" className="p-3" alt="Voltage Icon" />
                         <div className="flex flex-col justify-center mt-5">
-                            <h6 id="averagel" className="text-white text-xl ml-2 mb-5 font-semibold">{data.average_voltagel}V</h6>
-                            <p className="text-sm text-[#7A7F7F] ml-2">Avg. Voltage (L-L) (Volts)</p>
+                            <h6 id="averagel" className="text-white text-xl xl:text-2xl ml-2 mb-5 font-semibold">{data.average_voltagel}V</h6>
+                            <p className="text-sm xl:text-base text-[#7A7F7F] ml-2">Avg. Voltage (L-L) (Volts)</p>
                         </div>
                     </div>
                     <div className="flex-1 bg-[#051e1c] rounded-lg p-2">
                         <img src="assets/Icons (7).svg" className="p-3" alt="Voltage Icon" />
                         <div className="flex flex-col justify-center mt-5">
-                            <h6 id="averagen" className="text-white text-xl ml-2 mb-5 font-semibold">{data.average_voltagen}V</h6>
-                            <p className="text-sm text-[#7A7F7F] ml-2">Avg. Voltage (L-N) (Volts)</p>
+                            <h6 id="averagen" className="text-white text-xl xl:text-2xl ml-2 mb-5 font-semibold">{data.average_voltagen}V</h6>
+                            <p className="text-sm xl:text-base text-[#7A7F7F] ml-2">Avg. Voltage (L-N) (Volts)</p>
                         </div>
                     </div>
                 </div>

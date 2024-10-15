@@ -102,11 +102,11 @@ const Alert = ({BaseUrl, Url}) => {
                             <img src="assets/Polygon 1.png" alt="" className="ml-2" />
                         </button>
                     </div>
-                    <div className="max-h-[500px] overflow-y-auto rounded-lg scrollbar-custom">
-                        <table className="w-full border-collapse text-[#CACCCC] text-[0.8rem] text-start">
+                    <div className="max-h-[500px] xl:max-h-[710px] overflow-y-auto rounded-lg scrollbar-custom">
+                        <table className="w-full border-collapse text-[#CACCCC] text-xs xl:text-sm text-start">
                             <thead className="bg-[#051E1C] text-left sticky top-0 z-20 text-[#68BFB6]">
                                 <tr>
-                                    <th className="px-4 py-3 whitespace-nowrap">Fault Code</th>
+                                    <th className="px-4 xl:px-5 py-3 xl:py-4 whitespace-nowrap">Fault Code</th>
                                     <th className="px-4 py-3 whitespace-nowrap">Categories</th>
                                     <th className="px-4 py-3 whitespace-nowrap">Description</th>
                                     <th className="px-4 py-3 whitespace-nowrap">Severity</th>
@@ -118,7 +118,7 @@ const Alert = ({BaseUrl, Url}) => {
                                 {Array.isArray(notifications) ? (
                                     notifications.map((item, index) => (
                                         <tr key={index}>
-                                            <td className='px-4 py-3'>{item.fault_code}</td>
+                                            <td className='px-4 xl:px-5 py-3 xl:py-4'>{item.fault_code}</td>
                                             <td className='px-4 py-3'>{item.category}</td>
                                             <td className='px-4 py-3'>{item.description}</td>
                                             <td className={`px-4 py-3 whitespace-nowrap ${item.severity.toLowerCase() === 'alert' ? 'severity-alert' : item.severity.toLowerCase() === 'shutdown' ? 'severity-shutdown' : ''}`}>

@@ -129,7 +129,7 @@ const Solar = ({BaseUrl, Url}) => {
                 .attr('transform', `translate(0, ${height})`)
                 .call(d3.axisBottom(x).ticks(9).tickSizeOuter(0).tickFormat((d) => formatAMPM(d)))
                 .selectAll('text')
-                .style('fill', 'white');
+                .style('fill', 'white').style('font-size', width > 1500 ? '14px' : '12px');;
 
             svg.select('.y-axis')
                 .call(d3.axisLeft(y).ticks(5).tickSize(4).tickFormat((d) => ''))
@@ -203,8 +203,8 @@ const Solar = ({BaseUrl, Url}) => {
                                 <img src="assets/Icons (T).png" className="h-10 max-h-1/2 max-w-full" alt='image' />
                             </div>
                             <div>
-                                <p className="text-xs text-[#959999] pb-1 m-0">Total Capacity</p>
-                                <p className="text-sm m-0">550 kWh</p>
+                                <p className="text-xs xl:text-sm text-[#959999] pb-1 m-0">Total Capacity</p>
+                                <p className="text-sm xl:text-base m-0">550 kWh</p>
                             </div>
                         </div>
                     </div>
@@ -216,8 +216,8 @@ const Solar = ({BaseUrl, Url}) => {
                                 <img src="assets/Icons-Status.png" className="h-10 max-h-1/2 max-w-full" alt='image' />
                             </div>
                             <div>
-                                <p className="text-xs text-[#959999] pb-1 m-0">Status</p>
-                                <p className="text-sm m-0">Active</p>
+                                <p className="text-xs xl:text-sm text-[#959999] pb-1 m-0">Status</p>
+                                <p className="text-sm xl:text-base m-0">Active</p>
                             </div>
                         </div>
                     </div>
@@ -227,30 +227,30 @@ const Solar = ({BaseUrl, Url}) => {
                     <div className="grid grid-cols-4 gap-2 mt-1">
                         <div className="bg-[#051E1C] rounded-lg flex flex-col items-center justify-center">
                             <p className="text-xs xl:text-sm text-[#C37C5A] font-medium text-center">Operating Hours</p>
-                            <p className="text-lg font-semibold text-[#F3E5DE] pt-2" id="operating-hours">{data.operating_hours} hrs</p>
+                            <p className="text-lg xl:text-xl font-semibold text-[#F3E5DE] pt-2" id="operating-hours">{data.operating_hours} hrs</p>
                         </div>
                         <div className="bg-[#051E1C] rounded-lg flex flex-col items-center justify-center">
                             <p className="text-xs xl:text-sm text-[#C37C5A] font-medium text-center">Total Generation</p>
-                            <p className="text-lg font-semibold text-[#F3E5DE] pt-2" id="total-generation">{data.total_generation} kWh</p>
+                            <p className="text-lg xl:text-xl font-semibold text-[#F3E5DE] pt-2" id="total-generation">{data.total_generation} kWh</p>
                         </div>
                         <div className="bg-[#051E1C] rounded-lg flex flex-col items-center justify-center">
                             <p className="text-xs xl:text-sm text-[#C37C5A] font-medium text-center">Total Utilisation</p>
-                            <p className="text-lg font-semibold text-[#F3E5DE] pt-2" id="total-utilisation">{data.total_utilisation} kWh</p>
+                            <p className="text-lg xl:text-xl font-semibold text-[#F3E5DE] pt-2" id="total-utilisation">{data.total_utilisation} kWh</p>
                         </div>
                         <div className="bg-[#051E1C] rounded-lg flex flex-col items-center justify-center">
                             <p className="text-xs xl:text-sm text-[#C37C5A] font-medium text-center">Total Savings</p>
-                            <p className="text-lg font-semibold text-[#F3E5DE] pt-2" id="total-savings">INR {data.total_saving}</p>
+                            <p className="text-lg xl:text-xl font-semibold text-[#F3E5DE] pt-2" id="total-savings">INR {data.total_saving}</p>
                         </div>
                     </div>
 
                     <div className="rounded-lg mt-2 p-4" id="grid-it-rl" ref={containerRef}>
                         <div className="flex justify-between mb-4">
-                            <h5 className="text-sm text-white">Energy Generated Today</h5>
-                            <p className="text-white text-xs font-normal">Total Daily Generation: {data.daily_generation} kWh</p>
+                            <h5 className="text-sm xl:text-base text-white">Energy Generated Today</h5>
+                            <p className="text-white text-xs xl:text-sm font-normal">Total Daily Generation: {data.daily_generation} kWh</p>
                         </div>
-                        <p className="text-[#AFB2B2] text-xs mt-3 ">Updated 15 min ago</p>
+                        <p className="text-[#AFB2B2] text-xs xl:text-sm mt-3 ">Updated 15 min ago</p>
                         <div className="mt-4">
-                            <div id="my_dataviz" className="h-[200px]"></div>
+                            <div id="my_dataviz" className="h-[200px] xl:h-[300px]"></div>
                         </div>
                     </div>
                 </div>
@@ -260,20 +260,20 @@ const Solar = ({BaseUrl, Url}) => {
                     <div className="grid grid-cols-4 gap-2 mt-1">
                         {/* Power Generated Yesterday */}
                         <div className="grid grid-rows-2 mt-2">
-                            <div className="bg-[#051e1c] rounded-md mb-2 p-2 flex flex-col justify-between">
+                            <div className="bg-[#051e1c] rounded-md mb-2 p-2 gap-3 flex flex-col justify-between">
                                 <div className="flex items-center justify-between mb-2">
                                     <img src="assets/Icons.svg" alt="icon" />
                                     <h6 className="text-[#F3E5DE] text-sm xl:text-base font-semibold" id="power-generated" alt='image'>{data.power_generated}</h6>
                                 </div>
-                                <p className="text-[14px] text-[#AFB2B2] text-start">Power Generated Yesterday</p>
+                                <p className="text-sm xl:text-base text-[#AFB2B2] text-start">Power Generated Yesterday</p>
                             </div>
                             {/* Hours Operated Yesterday */}
-                            <div className="bg-[#051e1c] rounded-md mb-2 p-2 flex flex-col justify-between">
+                            <div className="bg-[#051e1c] rounded-md mb-2 p-2 gap-3 flex flex-col justify-between">
                                 <div className="flex items-center justify-between mb-2">
                                     <img src="assets/Icons (5).svg" alt="icon" />
                                     <h6 className="text-[#F3E5DE] text-sm xl:text-base font-semibold" id="hours" alt='image'>{data.hours_operated}</h6>
                                 </div>
-                                <p className="text-[14px] text-[#AFB2B2] text-start">Hours Operated Yesterday</p>
+                                <p className="text-sm xl:text-base text-[#AFB2B2] text-start">Hours Operated Yesterday</p>
                             </div>
                         </div>
 
@@ -284,7 +284,7 @@ const Solar = ({BaseUrl, Url}) => {
                                     <img src="assets/Icons (2).svg" alt="icon" />
                                     <h6 className="text-[#F3E5DE] text-sm xl:text-base font-semibold" id="utilisation" alt='image'>{data.utilisation}%</h6>
                                 </div>
-                                <p className="text-[14px] text-[#AFB2B2] text-start">Utilization Factor</p>
+                                <p className="text-sm xl:text-base text-[#AFB2B2] text-start">Utilization Factor</p>
                             </div>
                             {/* Power Factor */}
                             <div className="bg-[#051e1c] rounded-md mb-2 p-2 flex flex-col justify-between">
@@ -292,7 +292,7 @@ const Solar = ({BaseUrl, Url}) => {
                                     <img src="assets/Icons (6).svg" alt="icon" />
                                     <h6 className="text-[#F3E5DE] text-sm xl:text-base font-semibold" id="power" alt='image'>{data.power_factor}</h6>
                                 </div>
-                                <p className="text-[14px] text-[#AFB2B2] text-start">Power Factor</p>
+                                <p className="text-sm xl:text-base text-[#AFB2B2] text-start">Power Factor</p>
                             </div>
                         </div>
 
@@ -303,7 +303,7 @@ const Solar = ({BaseUrl, Url}) => {
                                     <img src="assets/Icons (3).svg" alt="icon" />
                                     <h6 className="text-[#F3E5DE] text-sm xl:text-base font-semibold" id="frequency" alt='image'>{data.frequency}</h6>
                                 </div>
-                                <p className="text-[14px] text-[#AFB2B2] text-start">Frequency (Hz)</p>
+                                <p className="text-sm xl:text-base text-[#AFB2B2] text-start">Frequency (Hz)</p>
                             </div>
                             {/* Breaker Status */}
                             <div className="bg-[#051e1c] rounded-md mb-2 p-2 flex flex-col justify-between">
@@ -311,7 +311,7 @@ const Solar = ({BaseUrl, Url}) => {
                                     <img src="assets/Icons (4).svg" alt="icon" />
                                     <h6 className="text-[#F3E5DE] text-sm xl:text-base font-semibold" id="breakerstatus" alt='image'>{data.breaker_status}</h6>
                                 </div>
-                                <p className="text-[14px] text-[#AFB2B2] text-start">Breaker Status</p>
+                                <p className="text-sm xl:text-base text-[#AFB2B2] text-start">Breaker Status</p>
                             </div>
                         </div>
 
@@ -320,12 +320,12 @@ const Solar = ({BaseUrl, Url}) => {
                             <div className="bg-[#051e1c] rounded-md mb-2 p-2 py-4 flex flex-col justify-between">
                                 <p className="text-sm xl:text-base text-white">Maintenance</p>
                                 <div className="m-0 p-0">
-                                    <p className="text-[#7A7F7F] text-[14px] m-0">Last date:</p>
-                                    <p className="text-[16px] text-white pt-1 m-0" id="maintenance-last-date">{data.maintainance_last_date}</p>
+                                    <p className="text-[#7A7F7F] text-sm xl:text-base m-0">Last date:</p>
+                                    <p className="text-base xl:text-lg text-white pt-1 m-0" id="maintenance-last-date">{data.maintainance_last_date}</p>
                                 </div>
                                 <div className="m-0 p-0">
-                                    <p className="text-[#7A7F7F] text-[14px] m-0">Next Due:</p>
-                                    <p className="text-[16px] text-white pt-1 m-0" id="next-due">{data.next_due}</p>
+                                    <p className="text-[#7A7F7F] text-sm xl:text-base m-0">Next Due:</p>
+                                    <p className="text-base xl:text-lg text-white pt-1 m-0" id="next-due">{data.next_due}</p>
                                 </div>
                             </div>
                         </div>
@@ -336,8 +336,8 @@ const Solar = ({BaseUrl, Url}) => {
                         <div className="grid-item-left-down mt-2 bg-[#030F0E] mb-7 rounded-md">
                             <table className="table-style w-full border-collapse">
                                 <thead className="bg-[#051E1C] text-[#68BFB6]">
-                                    <tr className="text-xs font-medium">
-                                        <th className="whitespace-nowrap text-center p-5 rounded-tl-lg"></th> {/* Top-left radius */}
+                                    <tr className="text-xs xl:text-sm font-medium">
+                                        <th className="whitespace-nowrap text-center p-5 xl:p-6 rounded-tl-lg"></th> {/* Top-left radius */}
                                         <th className="text-center font-medium">Voltage (L-L)(V)</th>
                                         <th className="text-center font-medium">Voltage (L-N)(V)</th>
                                         <th className="text-center rounded-tr-lg font-medium">Current (Amp)</th> {/* Top-right radius */}
@@ -345,22 +345,22 @@ const Solar = ({BaseUrl, Url}) => {
                                 </thead>
                                 <tbody className="bg-[#030F0E] text-[#CACCCC]">
                                     <tr>
-                                        <td className="text-center p-4 rounded-l-lg text-sm">L1 Phase</td> {/* Left-side rounded */}
-                                        <td id="voltage-l-l-phase1" className="text-center p-4 text-sm">{data.voltagel.phase1}</td>
-                                        <td id="voltage-l-n-phase1" className="text-center p-4 text-sm">{data.voltagen.phase1}</td>
-                                        <td id="current-phase1" className="text-center p-4 text-sm">{data.current.phase1}</td>
+                                        <td className="text-center p-4 rounded-l-lg text-sm xl:text-base">L1 Phase</td> {/* Left-side rounded */}
+                                        <td id="voltage-l-l-phase1" className="text-center p-4 text-sm xl:text-base">{data.voltagel.phase1}</td>
+                                        <td id="voltage-l-n-phase1" className="text-center p-4 text-sm xl:text-base">{data.voltagen.phase1}</td>
+                                        <td id="current-phase1" className="text-center p-4 text-sm xl:text-base">{data.current.phase1}</td>
                                     </tr>
                                     <tr>
-                                        <td className="text-center p-4 rounded-l-lg text-sm">L2 Phase</td> {/* Left-side rounded */}
-                                        <td id="voltage-l-l-phase2" className="text-center p-4 text-sm">{data.voltagel.phase2}</td>
-                                        <td id="voltage-l-n-phase2" className="text-center p-4 text-sm">{data.voltagen.phase2}</td>
-                                        <td id="current-phase2" className="text-center p-4 text-sm">{data.current.phase2}</td>
+                                        <td className="text-center p-4 rounded-l-lg text-sm xl:text-base">L2 Phase</td> {/* Left-side rounded */}
+                                        <td id="voltage-l-l-phase2" className="text-center p-4 text-sm xl:text-base">{data.voltagel.phase2}</td>
+                                        <td id="voltage-l-n-phase2" className="text-center p-4 text-sm xl:text-base">{data.voltagen.phase2}</td>
+                                        <td id="current-phase2" className="text-center p-4 text-sm xl:text-base">{data.current.phase2}</td>
                                     </tr>
                                     <tr>
-                                        <td className="text-center p-4 rounded-bl-lg text-sm">L3 Phase</td> {/* Bottom-left radius */}
-                                        <td id="voltage-l-l-phase3" className="text-center p-4 text-sm">{data.voltagel.phase3}</td>
-                                        <td id="voltage-l-n-phase3" className="text-center p-4 text-sm">{data.voltagen.phase3}</td>
-                                        <td id="current-phase3" className="text-center p-4 rounded-br-lg text-sm">{data.current.phase3}</td>
+                                        <td className="text-center p-4 rounded-bl-lg text-sm xl:text-base">L3 Phase</td> {/* Bottom-left radius */}
+                                        <td id="voltage-l-l-phase3" className="text-center p-4 text-sm xl:text-base">{data.voltagel.phase3}</td>
+                                        <td id="voltage-l-n-phase3" className="text-center p-4 text-sm xl:text-base">{data.voltagen.phase3}</td>
+                                        <td id="current-phase3" className="text-center p-4 rounded-br-lg text-sm xl:text-base">{data.current.phase3}</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -374,11 +374,11 @@ const Solar = ({BaseUrl, Url}) => {
                         <div className="grid-item-left-down mt-2">
                             <div className="notification-style p-2 rounded-md bg-[#030F0E]">
                                 <div className="text-white text-[20px] flex justify-between items-start">
-                                    <div className="mb-3 text-[16px] font-bold">
+                                    <div className="mb-3 text-base xl:text-lg font-bold">
                                         Notifications
                                     </div>
                                     <div className="flex">
-                                        <p className="flex items-center ml-4 text-[#AFB2B2] text-[14px]">
+                                        <p className="flex items-center ml-4 text-[#AFB2B2] text-sm xl:text-base">
                                             Alert
                                             <svg className="ml-2" width="21" height="22" viewBox="0 0 21 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <circle cx="10.5" cy="11" r="10.5" fill="#41ACA1" />
@@ -388,7 +388,7 @@ const Solar = ({BaseUrl, Url}) => {
                                             </svg>
                                         </p>
 
-                                        <p className="flex items-center ml-4 text-[#AFB2B2] text-[14px]">
+                                        <p className="flex items-center ml-4 text-[#AFB2B2] text-sm xl:text-base">
                                             Shutdown
                                             <svg className="ml-2" width="21" height="22" viewBox="0 0 21 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <circle cx="10.5" cy="11" r="10.5" fill="#EB5757" />
@@ -406,10 +406,10 @@ const Solar = ({BaseUrl, Url}) => {
                                     scrollbarWidth: 'thin',
                                     scrollbarColor: '#0A3D38 #0F544C',
                                 }}>
-                                <table className="w-full border-collapse text-[#CACCCC] text-[0.8rem]">
+                                <table className="w-full border-collapse text-[#CACCCC] text-xs lg:text-sm">
                                     <thead className="bg-[#051E1C] text-left sticky top-0 z-20 text-[#68BFB6]">
-                                        <tr className="text-xs">
-                                            <th className="px-3 py-3 rounded-tl-lg font-medium">Fault Code</th>
+                                        <tr className="text-xs xl:text-sm">
+                                            <th className="px-3 xl:px-4 py-2 xl:py-3 rounded-tl-lg font-medium">Fault Code</th>
                                             {/* <th>Categories</th> */}
                                             <th className="px-3 py-2 font-medium">Description</th>
                                             <th className="px-3 py-2 font-medium">Severity</th>
@@ -420,7 +420,7 @@ const Solar = ({BaseUrl, Url}) => {
                                     <tbody className="bg-[#030F0E] capitalize text-[#CACCCC]" id="alert-container">
                                         {alertsData.filter(i => i.category === 'solar').map((item, index) => (
                                             <tr key={index}>
-                                                <td className="px-3 py-2">{item.fault_code}</td>
+                                                <td className="px-3 xl:px-4 py-2 xl:py-3">{item.fault_code}</td>
                                                 <td className="px-3 py-2">{item.description}</td>
                                                 <td className={`px-3 py-3 whitespace-nowrap ${item.severity.toLowerCase() === 'alert' ? 'severity-alert' : item.severity.toLowerCase() === 'shutdown' ? 'severity-shutdown' : ''}`}>
                                                     {item.severity}
@@ -439,7 +439,7 @@ const Solar = ({BaseUrl, Url}) => {
                         <div className="grid-item-left-down mt-5 bg-[#030F0E] mb-7 rounded-lg pb-0">
                             <table className="table-style w-full border-collapse">
                                 <thead className="thead-style bg-[#051E1C] text-[#68BFB6]">
-                                    <tr className="text-xs text-center font-medium">
+                                    <tr className="text-xs xl:text-sm text-center font-medium">
                                         <th className="whitespace-nowrap p-3 rounded-tl-lg font-medium">Power</th>
                                         <th className="p-3 font-medium">Phase 1</th>
                                         <th className="p-3 font-medium">Phase 2</th>
@@ -447,13 +447,13 @@ const Solar = ({BaseUrl, Url}) => {
                                     </tr>
                                 </thead>
                                 <tbody className="bg-[#030F0E] text-center text-[#CACCCC]">
-                                    <tr className='text-sm'>
+                                    <tr className='text-sm xl:text-base'>
                                         <td className="p-3">kW</td>
                                         <td id="kW-phase1" className="p-2">{data.kW.phase1}</td>
                                         <td id="kW-phase2" className="p-2">{data.kW.phase2}</td>
                                         <td id="kW-phase3" className="p-2">{data.kW.phase3}</td>
                                     </tr>
-                                    <tr className='text-sm'>
+                                    <tr className='text-sm xl:text-base'>
                                         <td className="p-3 rounded-bl-lg">kVA</td>
                                         <td id="kVA-phase1" className="p-2">{data.kVA.phase1}</td>
                                         <td id="kVA-phase2" className="p-2">{data.kVA.phase2}</td>
