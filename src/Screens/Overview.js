@@ -128,7 +128,7 @@ const Overview = ({ BaseUrl, Url }) => {
         const width = myDatavizRef.current.parentElement.offsetWidth
             ? myDatavizRef.current.parentElement.offsetWidth - margin.left - margin.right
             : 500; // Fallback width
-        const height = 300 - margin.top - margin.bottom;
+        const height = myDatavizRef.current.parentElement.offsetHeight - margin.top - margin.bottom;
 
         // If the parent element width is 0, delay the rendering until the element is visible
         if (width <= 0) {
@@ -152,7 +152,7 @@ const Overview = ({ BaseUrl, Url }) => {
         svg.append('g')
             .attr('transform', `translate(0, ${height})`)
             .call(d3.axisBottom(x).ticks(9).tickFormat(d => formatAMPM(d)))
-            .selectAll('text').style('fill', 'white').style('font-size', width > 1500 ? '14px' : '12px');
+            .selectAll('text').style('fill', 'white').style('font-size', width > 500 ? '14px' : '10px');
 
         // Y axis
         svg.append('g')
@@ -284,7 +284,7 @@ const Overview = ({ BaseUrl, Url }) => {
                 {/* Left Section */}
                 <div>
                     <div
-                        className="grid grid-cols-1 sm:grid-cols-3 transition-transform duration-500 gap-3 h-[50vh]"
+                        className="grid grid-cols-1 sm:grid-cols-3 transition-transform duration-500 gap-3 xl:gap-5 h-[45vh]"
                         style={{ transform: `translateX(-${currentIndex * 100}%)` }}
                     >
                         {images.map((image, index) => (
@@ -312,7 +312,7 @@ const Overview = ({ BaseUrl, Url }) => {
                     </div>
 
                     {/* Pagination Dots */}
-                    <div className="flex justify-end mt-5 space-x-2 mr-5">
+                    <div className="flex justify-end mt-2 xl:mt-5 space-x-2">
                         {images.map((_, index) => (
                             <span
                                 key={index}
@@ -340,7 +340,7 @@ const Overview = ({ BaseUrl, Url }) => {
                         <div
                             id="my_dataviz"
                             ref={myDatavizRef}
-                            className="flex-1"
+                            className="flex-1 h-[150px] xl:h-[300px]"
 
                         ></div>
                     </div>

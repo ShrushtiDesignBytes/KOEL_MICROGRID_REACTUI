@@ -127,7 +127,7 @@ const Mains = ({BaseUrl, Url}) => {
                 .attr('transform', `translate(0, ${height})`)
                 .call(d3.axisBottom(x).ticks(9).tickSizeOuter(0).tickFormat((d) => formatAMPM(d)))
                 .selectAll('text')
-                .style('fill', 'white').style('font-size', width > 1500 ? '14px' : '12px');;
+                .style('fill', 'white').style('font-size', width > 500 ? '14px' : '10px');;
 
             svg.select('.y-axis')
                 .call(d3.axisLeft(y).ticks(5).tickSize(4).tickFormat((d) => ''))
