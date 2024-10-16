@@ -92,7 +92,7 @@ const Alert = ({BaseUrl, Url}) => {
     }, []);
 
     return (
-        <div className="p-4">
+        <div className="p-2">
             <div className="m-2">
                 <div className="text-white text-xl font-bold">
                     <div className="mb-2 flex justify-between mt-5">
@@ -102,7 +102,7 @@ const Alert = ({BaseUrl, Url}) => {
                             <img src="assets/Polygon 1.png" alt="" className="ml-2" />
                         </button>
                     </div>
-                    <div className="max-h-[500px] xl:max-h-[710px] overflow-y-auto rounded-lg scrollbar-custom">
+                    <div className="max-h-[500px] xl:max-h-[750px] overflow-y-auto rounded-lg scrollbar-custom">
                         <table className="w-full border-collapse text-[#CACCCC] text-xs xl:text-sm text-start">
                             <thead className="bg-[#051E1C] text-left sticky top-0 z-20 text-[#68BFB6]">
                                 <tr>
