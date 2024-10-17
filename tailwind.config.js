@@ -3,6 +3,9 @@ module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
+      screens: {
+        'xl': '1920px',  // Setting 1920px as the xl breakpoint
+      },
       fontFamily: {
         poppins: ['Poppins', 'sans-serif'], // Add Poppins font
         sans: ['Arial', 'Helvetica', 'sans-serif'],

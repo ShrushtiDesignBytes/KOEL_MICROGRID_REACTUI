@@ -340,7 +340,7 @@ const Overview = ({ BaseUrl, Url }) => {
                         <div
                             id="my_dataviz"
                             ref={myDatavizRef}
-                            className="flex-1 h-[150px] xl:h-[300px]"
+                            className="flex-1 h-[200px] xl:h-[300px]"
 
                         ></div>
                     </div>

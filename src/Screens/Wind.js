@@ -295,7 +295,7 @@ const Wind = ({BaseUrl, Url}) => {
                                     <img src="assets/Icons (3).svg" alt='image' />
                                     <h6 className="text-[#F3E5DE] text-sm xl:text-base font-semibold" id="frequency">{data.frequency}</h6>
                                 </div>
-                                <p className="text-sm text-[#AFB2B2] text-start">Frequency (Hz)</p>
+                                <p className="text-sm xl:text-base text-[#AFB2B2] text-start">Frequency (Hz)</p>
                             </div>
                             <div className="bg-[#051e1c] rounded-md mb-2 p-2 flex flex-col justify-between">
                                 <div className="flex items-center justify-between">
@@ -394,7 +394,7 @@ const Wind = ({BaseUrl, Url}) => {
                                     scrollbarWidth: 'thin',
                                     scrollbarColor: '#0A3D38 #0F544C',
                                 }}>
-                                <table className="w-full border-collapse text-[#CACCCC] text-[0.8rem]">
+                                <table className="w-full border-collapse text-[#CACCCC] text-xs xl:text-sm">
                                     <thead className="bg-[#051E1C] text-left sticky top-0 z-20 text-[#68BFB6]">
                                         <tr className="text-xs xl:text-sm">
                                             <th className="px-3 xl:px-4 py-2 xl:py-3 rounded-tl-lg font-medium">Fault Code</th>
