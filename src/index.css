@@ -9,6 +9,7 @@
     overflow-y: auto;
     scrollbar-width: thin; /* Firefox */
     scrollbar-color: #0A3D38 #030F0E; /* Firefox */
+    background: #030F0E; 
   }
 
   body::-webkit-scrollbar {
