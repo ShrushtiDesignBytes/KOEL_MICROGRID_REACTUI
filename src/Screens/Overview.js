@@ -14,6 +14,7 @@ const Overview = ({ BaseUrl, Url }) => {
     const [imageLoaded, setImageLoaded] = useState(false);
     let resizeTimeout = null;
     const [data, setData] = useState({});
+    const [isOnline, setIsOnline] = useState(navigator.onLine);
 
     const fetchConfig = () => {
         fetch(`${BaseUrl}/overview`)
@@ -55,14 +56,34 @@ const Overview = ({ BaseUrl, Url }) => {
     };
 
     useEffect(() => {
+        const handleOnlineStatus = () => {
+          setIsOnline(navigator.onLine);
+        };
+    
+        window.addEventListener('online', handleOnlineStatus);
+        window.addEventListener('offline', handleOnlineStatus);
+    
+        return () => {
+          window.removeEventListener('online', handleOnlineStatus);
+          window.removeEventListener('offline', handleOnlineStatus);
+        };
+      }, []);
+
+      useEffect(() => {
         fetchConfig();
-
-        updateData(data)
-
-        const interval = setInterval(fetchConfig, 5000);
-
+    
+        const interval = setInterval(() => {
+          fetchConfig(); 
+        }, 5000);
+    
         return () => clearInterval(interval); 
-    }, [data]);
+      }, []);
+    
+      useEffect(() => {
+        if (isOnline && data) {
+          updateData(data); 
+        }
+      }, [isOnline, data]); 
 
 
     const handleDotClick = (index) => {

@@ -11,6 +11,7 @@ const Biogas = ({BaseUrl, Url}) => {
     const [loading, setLoading] = useState(true);
     const [imageLoaded, setImageLoaded] = useState(false);
     const containerRef = useRef(null)
+    const [isOnline, setIsOnline] = useState(navigator.onLine);
 
     const fetchAlerts = async () => {
         try {
@@ -62,15 +63,34 @@ const Biogas = ({BaseUrl, Url}) => {
     };
 
     useEffect(() => {
-        // Fetch API data   
+        const handleOnlineStatus = () => {
+          setIsOnline(navigator.onLine);
+        };
+    
+        window.addEventListener('online', handleOnlineStatus);
+        window.addEventListener('offline', handleOnlineStatus);
+    
+        return () => {
+          window.removeEventListener('online', handleOnlineStatus);
+          window.removeEventListener('offline', handleOnlineStatus);
+        };
+      }, []);
+
+      useEffect(() => {
         fetchAlerts();
-
-        updateData(data)
-        
-        const interval = setInterval(fetchAlerts, 1000);
-
-        return () => clearInterval(interval);
-      }, [data]);
+    
+        const interval = setInterval(() => {
+          fetchAlerts(); 
+        }, 5000);
+    
+        return () => clearInterval(interval); 
+      }, []);
+    
+      useEffect(() => {
+        if (isOnline && data) {
+          updateData(data); 
+        }
+      }, [isOnline, data]); 
     
       // Use another useEffect to handle image onload after rendering
       useEffect(() => {
@@ -310,27 +330,27 @@ const Biogas = ({BaseUrl, Url}) => {
                             <table className="table-style w-full border-collapse">
                                 <thead className="bg-[#051E1C] text-[#68BFB6]">
                                     <tr className="text-xs xl:text-sm font-medium">
-                                        <th className="text-center p-5 xl:p-6 rounded-tl-lg"></th> {/* Top-left radius */}
+                                        <th className="text-center p-5 xl:p-6 rounded-tl-lg"></th>
                                         <th className="text-center font-medium">Voltage (L-L)(V)</th>
                                         <th className="text-center font-medium">Voltage (L-N)(V)</th>
-                                        <th className="text-center rounded-tr-lg font-medium">Current (Amp)</th> {/* Top-right radius */}
+                                        <th className="text-center rounded-tr-lg font-medium">Current (Amp)</th>
                                     </tr>
                                 </thead>
                                 <tbody className="bg-[#030F0E] text-[#CACCCC]">
                                     <tr>
-                                        <td className="text-center p-4 rounded-l-lg text-sm xl:text-base">L1 Phase</td> {/* Left-side rounded */}
+                                        <td className="text-center p-4 rounded-l-lg text-sm xl:text-base">L1 Phase</td>
                                         <td id="voltage-l-l-phase1" className="text-center p-4 text-sm xl:text-base">{data.voltagel.phase1}</td>
                                         <td id="voltage-l-n-phase1" className="text-center p-4 text-sm xl:text-base">{data.voltagen.phase1}</td>
                                         <td id="current-phase1" className="text-center p-4 text-sm xl:text-base">{data.current.phase1}</td>
                                     </tr>
                                     <tr>
-                                        <td className="text-center p-4 rounded-l-lg text-sm xl:text-base">L2 Phase</td> {/* Left-side rounded */}
+                                        <td className="text-center p-4 rounded-l-lg text-sm xl:text-base">L2 Phase</td>
                                         <td id="voltage-l-l-phase2" className="text-center p-4 text-sm xl:text-base">{data.voltagel.phase2}</td>
                                         <td id="voltage-l-n-phase2" className="text-center p-4 text-sm xl:text-base">{data.voltagen.phase2}</td>
                                         <td id="current-phase2" className="text-center p-4 text-sm xl:text-base">{data.current.phase2}</td>
                                     </tr>
                                     <tr>
-                                        <td className="text-center p-4 rounded-bl-lg text-sm xl:text-base">L3 Phase</td> {/* Bottom-left radius */}
+                                        <td className="text-center p-4 rounded-bl-lg text-sm xl:text-base">L3 Phase</td>
                                         <td id="voltage-l-l-phase3" className="text-center p-4 text-sm xl:text-base">{data.voltagel.phase3}</td>
                                         <td id="voltage-l-n-phase3" className="text-center p-4 text-sm xl:text-base">{data.voltagen.phase3}</td>
                                         <td id="current-phase3" className="text-center p-4 rounded-br-lg text-sm xl:text-base">{data.current.phase3}</td>

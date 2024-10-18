@@ -4,8 +4,8 @@ import React, { useEffect, useState } from 'react';
 const Alert = ({BaseUrl, Url}) => {
 
     const [notifications, setNotifications] = useState([]);
+    const [isOnline, setIsOnline] = useState(navigator.onLine);
 
-    // Fetch notifications
     const fetchNotifications = async () => {
         try {
             const response = await fetch(`${BaseUrl}/alert`);
@@ -18,17 +18,17 @@ const Alert = ({BaseUrl, Url}) => {
           
             const now = new Date();
             const fiveDaysAgo = new Date();
-            fiveDaysAgo.setDate(now.getDate() - 5); // Set threshold to 5 days ago
+            fiveDaysAgo.setDate(now.getDate() - 5); 
     
-            // Helper function to parse the "DD-MM-YY | HH:MM AM/PM" format to a JavaScript Date object
+            
             const parseDateTime = (dateTimeString) => {
                 const [datePart, timePart] = dateTimeString.split(" | ");
                 const [day, month, year] = datePart.split("-").map(Number);
-                const dateFormatted = `${month}-${day}-${"20" + year} ${timePart}`; // Convert to MM-DD-YYYY format for Date constructor
+                const dateFormatted = `${month}-${day}-${"20" + year} ${timePart}`; 
                 return new Date(dateFormatted);
             };
     
-            // Filter the data to include only notifications from the last 5 days
+            
             const recentNotifications = data.filter(notification => {
                 const notificationDate = parseDateTime(notification.date_time); // Convert the date string to Date object
                 return notificationDate >= fiveDaysAgo; // Compare with the 5-day threshold
@@ -45,7 +45,7 @@ const Alert = ({BaseUrl, Url}) => {
 
     const sendNotifications = async (notificationsArray) => {
         for (const notification of notificationsArray) {
-            await updateData(notification);
+          //  await updateData(notification);
         }
         console.log('All notifications updated successfully');
     };
@@ -54,7 +54,7 @@ const Alert = ({BaseUrl, Url}) => {
     const updateData = async (newData) => {
         try {
             const response = await fetch(`${Url}/alert`, {
-                method: 'POST', 
+                method: 'PATCH', 
                 headers: {
                     'Content-Type': 'application/json',
                 },
@@ -70,15 +70,36 @@ const Alert = ({BaseUrl, Url}) => {
             console.log(err.message);
         }
     };
+
     useEffect(() => {
+        const handleOnlineStatus = () => {
+          setIsOnline(navigator.onLine);
+        };
+    
+        window.addEventListener('online', handleOnlineStatus);
+        window.addEventListener('offline', handleOnlineStatus);
+    
+        return () => {
+          window.removeEventListener('online', handleOnlineStatus);
+          window.removeEventListener('offline', handleOnlineStatus);
+        };
+      }, []);
 
+      useEffect(() => {
         fetchNotifications();
-        //updateData(notifications)
-        // Set up interval for fetching notifications every 5 seconds
-        const intervalId = setInterval(fetchNotifications, 60000);
-
-        return () => clearInterval(intervalId);
-    }, [notifications]);
+    
+        const interval = setInterval(() => {
+            fetchNotifications();
+        }, 5000);
+    
+        return () => clearInterval(interval); 
+      }, []);
+    
+    //   useEffect(() => {
+    //     if (isOnline && notifications) {
+    //       //updateData(notifications)
+    //     }
+    //   }, [isOnline, notifications]); 
 
 
     useEffect(() => {

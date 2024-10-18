@@ -11,7 +11,7 @@ const Wind = ({BaseUrl, Url}) => {
     const [data, setData] = useState({});
     const [imageLoaded, setImageLoaded] = useState(false);
     const containerRef = useRef(null)
-
+    const [isOnline, setIsOnline] = useState(navigator.onLine);
 
     const fetchAlerts = async () => {
         try {
@@ -61,17 +61,37 @@ const Wind = ({BaseUrl, Url}) => {
             console.log(err.message);
         }
     };
-    useEffect(() => {
-        // Fetch API data
-        fetchAlerts();
-
-        updateData(data)
-        const interval = setInterval(fetchAlerts, 1000);
-
-        return () => clearInterval(interval);
-      }, [data]);
     
-      // Use another useEffect to handle image onload after rendering
+    useEffect(() => {
+        const handleOnlineStatus = () => {
+          setIsOnline(navigator.onLine);
+        };
+    
+        window.addEventListener('online', handleOnlineStatus);
+        window.addEventListener('offline', handleOnlineStatus);
+    
+        return () => {
+          window.removeEventListener('online', handleOnlineStatus);
+          window.removeEventListener('offline', handleOnlineStatus);
+        };
+      }, []);
+
+      useEffect(() => {
+        fetchAlerts();
+    
+        const interval = setInterval(() => {
+          fetchAlerts(); 
+        }, 5000);
+    
+        return () => clearInterval(interval); 
+      }, []);
+    
+      useEffect(() => {
+        if (isOnline && data) {
+          updateData(data); 
+        }
+      }, [isOnline, data]); 
+
       useEffect(() => {
         if (imageLoaded && !loading) {
             fetch('./dummy_data.json')

@@ -11,7 +11,7 @@ const Mains = ({BaseUrl, Url}) => {
     const [loading, setLoading] = useState(true);
     const [imageLoaded, setImageLoaded] = useState(false);
     const containerRef = useRef(null);
-
+    const [isOnline, setIsOnline] = useState(navigator.onLine);
     
     const fetchAlerts = async () => {
         try {
@@ -62,15 +62,34 @@ const Mains = ({BaseUrl, Url}) => {
     };
 
     useEffect(() => {
-        // Fetch API data   
+        const handleOnlineStatus = () => {
+          setIsOnline(navigator.onLine);
+        };
+    
+        window.addEventListener('online', handleOnlineStatus);
+        window.addEventListener('offline', handleOnlineStatus);
+    
+        return () => {
+          window.removeEventListener('online', handleOnlineStatus);
+          window.removeEventListener('offline', handleOnlineStatus);
+        };
+      }, []);
+
+      useEffect(() => {
         fetchAlerts();
-
-        updateData(data)
-        
-        const interval = setInterval(fetchAlerts, 1000);
-
-        return () => clearInterval(interval);
-      }, [data]);
+    
+        const interval = setInterval(() => {
+          fetchAlerts(); 
+        }, 5000);
+    
+        return () => clearInterval(interval); 
+      }, []);
+    
+      useEffect(() => {
+        if (isOnline && data) {
+          updateData(data); 
+        }
+      }, [isOnline, data]); 
 
 
     useEffect(() => {

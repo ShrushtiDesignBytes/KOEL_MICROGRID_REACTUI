@@ -8,6 +8,7 @@ const Genset = ({ BaseUrl, Url }) => {
     const [alertCount, setAlertCount] = useState(0);
     const [shutdownCount, setShutdownCount] = useState(0);
     const [loading, setLoading] = useState(true);
+    const [isOnline, setIsOnline] = useState(navigator.onLine);
 
     const fetchAlerts = async () => {
         try {
@@ -57,15 +58,34 @@ const Genset = ({ BaseUrl, Url }) => {
     };
 
     useEffect(() => {
-        // Fetch API data   
+        const handleOnlineStatus = () => {
+          setIsOnline(navigator.onLine);
+        };
+    
+        window.addEventListener('online', handleOnlineStatus);
+        window.addEventListener('offline', handleOnlineStatus);
+    
+        return () => {
+          window.removeEventListener('online', handleOnlineStatus);
+          window.removeEventListener('offline', handleOnlineStatus);
+        };
+      }, []);
+
+      useEffect(() => {
         fetchAlerts();
-
-        updateData(data)
-
-        const interval = setInterval(fetchAlerts, 1000);
-
-        return () => clearInterval(interval);
-    }, [data]);
+    
+        const interval = setInterval(() => {
+          fetchAlerts(); 
+        }, 5000);
+    
+        return () => clearInterval(interval); 
+      }, []);
+    
+      useEffect(() => {
+        if (isOnline && data) {
+          updateData(data); 
+        }
+      }, [isOnline, data]); 
 
 
     const displayCounts = (data) => {
