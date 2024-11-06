@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable jsx-a11y/heading-has-content */
 /* eslint-disable jsx-a11y/img-redundant-alt */
 import React, { useEffect, useState } from 'react';
@@ -97,9 +98,9 @@ const Genset = ({ BaseUrl, Url }) => {
     };
     return (
         !loading && <div className="p-4">
+            {/* First Row Section */}
             <div className="grid grid-cols-2 gap-5">
                 <div className="relative w-full h-full rounded-md bg-gradient-to-t from-custom-dark-image to-custom-green-image flex items-center justify-center">
-                    {/* Image Section */}
                     <div className="w-fit h-fit lg:w-11/12 lg:h-3/4">
                         <img
                             id="overview-image"
@@ -108,8 +109,6 @@ const Genset = ({ BaseUrl, Url }) => {
                             className="block w-full h-full object-contain"
                         />
                     </div>
-
-                    {/* Icon Section */}
                     <div className="absolute top-7 left-5 transform -translate-x-1/5 translate-y-1/5 p-1.5 bg-transparent text-white rounded z-10 flex items-center max-w-[calc(100%-40px)]">
                         <div className="mr-2.5">
                             <img src="assets/Group.png" className="max-h-1/2 max-w-full" alt="Group Icon" />
@@ -138,12 +137,10 @@ const Genset = ({ BaseUrl, Url }) => {
                     </div>
 
                     <div className="rounded-lg mr-0 p-4 bg-[#051e1c]">
-                        {/* Health Index Title */}
                         <div className="ml-2">
                             <p className="text-white text-start text-base font-bold">Health Index</p>
                         </div>
 
-                        {/* Color Boxes */}
                         <div className="flex ml-2 justify-between mt-5">
                             <div className="bg-[#F12D2D] h-[10px] w-[90%] mr-[10px] ml-0"></div>
                             <div className="h-[10px] w-[90%] mr-[10px] ml-0 bg-[#FD9C2B]"></div>
@@ -156,7 +153,6 @@ const Genset = ({ BaseUrl, Url }) => {
                             <div className="h-[10px] w-[90%] mr-[10px] ml-0 bg-[#199E2E]"></div>
                         </div>
 
-                        {/* Maintenance Information */}
                         <div className="flex justify-between p-2 rounded-b-lg">
                             <div className="text-xs xl:text-sm whitespace-nowrap text-[#959999]">
                                 Last Maintenance Date: <span id="last-maintenance" className="text-white">{data.maintainance_last_date}</span>
@@ -169,7 +165,6 @@ const Genset = ({ BaseUrl, Url }) => {
                     </div>
 
                     <div className="flex justify-between gap-3 rounded-lg">
-                        {/* SOC Section */}
                         <div className="bg-[#030F0E] p-4 rounded-lg flex-1">
                             <div className="flex flex-col items-start ml-2">
                                 <h5 className="text-[#CACCCC] text-lg flex font-semibold">Fuel</h5>
@@ -183,13 +178,11 @@ const Genset = ({ BaseUrl, Url }) => {
                             </div>
                         </div>
 
-                        {/* Energy Consumption Section */}
                         <div className="bg-[#030F0E] p-4 rounded-lg flex-1">
                             <h5 className="text-[#CACCCC] xl:text-lg font-semibold text-base mb-5 flex justify-between">
                                 Energy Consumption
                             </h5>
 
-                            {/* Critical Load Progress Bar */}
                             <div className='pb-2 justify-between mb-2 gap-5'>
                                 <div className="w-full flex flex-col gap-2 mt-5">
                                     <div className="text-[#959999] text-sm xl:text-base text-start">Critical Load</div>
@@ -208,17 +201,15 @@ const Genset = ({ BaseUrl, Url }) => {
                                         </div>
                                         <h6 className="text-xs text-white mb-0" id="critical-load">{data.non_critical_load}%</h6>
                                     </div>
-
-
                                 </div>
                             </div>
-                            {/* You can add similar sections for other energy bars as needed */}
                         </div>
                     </div>
-
                 </div>
             </div>
+            {/* Second Row Section */}
             <div className="grid grid-cols-2 gap-5 mt-2 ">
+                {/* Left Section */}
                 <div className="grid-item-left">
                     <div className="grid grid-cols-4 gap-2 mt-1">
                         <div className="grid grid-rows-2 mt-2">
@@ -268,7 +259,6 @@ const Genset = ({ BaseUrl, Url }) => {
                                 </div>
                                 <p className="text-sm xl:text-base text-[#AFB2B2] text-start">Utilisation Factor</p>
                             </div>
-
                         </div>
                         <div className="grid grid-rows-2 mt-2">
                             <div className="bg-[#051e1c] rounded-md mb-2 p-2 flex flex-col justify-between">
@@ -301,34 +291,33 @@ const Genset = ({ BaseUrl, Url }) => {
                                 </thead>
                                 <tbody className="bg-[#030F0E] text-[#CACCCC]">
                                     <tr>
-                                        <td className="text-center p-4 rounded-l-lg text-sm xl:text-base">L1 Phase</td> {/* Left-side rounded */}
+                                        <td className="text-center p-4 rounded-l-lg text-sm xl:text-base">L1 Phase</td>
                                         <td id="voltage-l-l-phase1" className="text-center p-4 text-sm xl:text-base">{data.voltagel.phase1}</td>
                                         <td id="voltage-l-n-phase1" className="text-center p-4 text-sm xl:text-base">{data.voltagen.phase1}</td>
                                         <td id="current-phase1" className="text-center p-4 text-sm xl:text-base">{data.current.phase1}</td>
                                     </tr>
                                     <tr>
-                                        <td className="text-center p-4 rounded-l-lg text-sm xl:text-base">L2 Phase</td> {/* Left-side rounded */}
+                                        <td className="text-center p-4 rounded-l-lg text-sm xl:text-base">L2 Phase</td>
                                         <td id="voltage-l-l-phase2" className="text-center p-4 text-sm xl:text-base">{data.voltagel.phase2}</td>
                                         <td id="voltage-l-n-phase2" className="text-center p-4 text-sm xl:text-base">{data.voltagen.phase2}</td>
                                         <td id="current-phase2" className="text-center p-4 text-sm xl:text-base">{data.current.phase2}</td>
                                     </tr>
                                     <tr>
-                                        <td className="text-center p-4 rounded-bl-lg text-sm xl:text-base">L3 Phase</td> {/* Bottom-left radius */}
+                                        <td className="text-center p-4 rounded-bl-lg text-sm xl:text-base">L3 Phase</td>
                                         <td id="voltage-l-l-phase3" className="text-center p-4 text-sm xl:text-base">{data.voltagel.phase3}</td>
                                         <td id="voltage-l-n-phase3" className="text-center p-4 text-sm xl:text-base">{data.voltagen.phase3}</td>
                                         <td id="current-phase3" className="text-center p-4 rounded-br-lg text-sm xl:text-base">{data.current.phase3}</td>
                                     </tr>
                                 </tbody>
                             </table>
-
                         </div>
                     </div>
                 </div>
-
+                {/* Right Section */}
                 <div className="grid-item-right">
                     <div className="grid-item-right-left">
                         <div className="grid-item-left-down mt-2">
-                            <div className="notification-style p-2 rounded-md bg-[#030F0E]">
+                            <div className="p-2">
                                 <div className="text-white text-[20px] flex justify-between items-start">
                                     <div className="mb-4 text-base xl:text-lg font-bold">
                                         Notifications
@@ -355,9 +344,8 @@ const Genset = ({ BaseUrl, Url }) => {
                                         </p>
                                     </div>
                                 </div>
-
                             </div>
-                            <div className="bg-[#030F0E] rounded-lg pb-2.5 overflow-y-auto max-h-[200px]"
+                            <div className="bg-[#030F0E] rounded-lg pb-2.5 overflow-y-auto h-[230px] xl:h-[260px]"
                                 style={{
                                     scrollbarWidth: 'thin',
                                     scrollbarColor: '#0A3D38 #0F544C',
@@ -375,7 +363,7 @@ const Genset = ({ BaseUrl, Url }) => {
                                     <tbody className="bg-[#030F0E] capitalize text-[#CACCCC]" id="alert-container">
                                         {alertsData.filter(i => i.category === 'genset').map((item, index) => (
                                             <tr key={index}>
-                                                <td className="px-3 xl:px-4 py-2 xl:py-3">{item.fault_code}</td>
+                                                <td className="px-3 xl:px-4 py-4">{item.fault_code}</td>
                                                 <td className="px-3 py-2">{item.description}</td>
                                                 <td className={`px-3 py-3 whitespace-nowrap ${item.severity.toLowerCase() === 'alert' ? 'severity-alert' : item.severity.toLowerCase() === 'shutdown' ? 'severity-shutdown' : ''}`}>
                                                     {item.severity}
@@ -389,7 +377,6 @@ const Genset = ({ BaseUrl, Url }) => {
                                     </tbody>
                                 </table>
                             </div>
-
                         </div>
                         <div className="grid-item-left-down mt-5 bg-[#030F0E] mb-7 rounded-lg pb-0">
                             <table className="table-style w-full border-collapse">
@@ -417,7 +404,6 @@ const Genset = ({ BaseUrl, Url }) => {
                                 </tbody>
                             </table>
                         </div>
-
                     </div>
                 </div>
             </div>

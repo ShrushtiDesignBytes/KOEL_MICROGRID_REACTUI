@@ -4,7 +4,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import * as d3 from 'd3';
 
-const Solar = ({BaseUrl, Url}) => {
+const Solar = ({ BaseUrl, Url }) => {
     const [data, setData] = useState({})
     const [alertsData, setAlertsData] = useState([]);
     const [alertCount, setAlertCount] = useState(0);
@@ -13,7 +13,7 @@ const Solar = ({BaseUrl, Url}) => {
     const [imageLoaded, setImageLoaded] = useState(false);
     const containerRef = useRef(null);
     const [isOnline, setIsOnline] = useState(navigator.onLine);
-    
+
     const fetchAlerts = async () => {
         try {
             const response = await fetch(`${BaseUrl}/solar`);
@@ -46,7 +46,7 @@ const Solar = ({BaseUrl, Url}) => {
     const updateData = async (newData) => {
         try {
             const response = await fetch(`${Url}/solar/1`, {
-                method: 'PATCH', 
+                method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
                 },
@@ -65,37 +65,36 @@ const Solar = ({BaseUrl, Url}) => {
 
     useEffect(() => {
         const handleOnlineStatus = () => {
-          setIsOnline(navigator.onLine);
+            setIsOnline(navigator.onLine);
         };
-    
+
         window.addEventListener('online', handleOnlineStatus);
         window.addEventListener('offline', handleOnlineStatus);
-    
+
         return () => {
-          window.removeEventListener('online', handleOnlineStatus);
-          window.removeEventListener('offline', handleOnlineStatus);
+            window.removeEventListener('online', handleOnlineStatus);
+            window.removeEventListener('offline', handleOnlineStatus);
         };
-      }, []);
+    }, []);
 
-      useEffect(() => {
+    useEffect(() => {
         fetchAlerts();
-    
-        const interval = setInterval(() => {
-          fetchAlerts(); 
-        }, 5000);
-    
-        return () => clearInterval(interval); 
-      }, []);
-    
-      useEffect(() => {
-        if (isOnline && data) {
-          updateData(data); 
-        }
-      }, [isOnline, data]); 
 
-    
-      // Use another useEffect to handle image onload after rendering
-      useEffect(() => {
+        const interval = setInterval(() => {
+            fetchAlerts();
+        }, 5000);
+
+        return () => clearInterval(interval);
+    }, []);
+
+    useEffect(() => {
+        if (isOnline && data) {
+            updateData(data);
+        }
+    }, [isOnline, data]);
+
+
+    useEffect(() => {
         if (imageLoaded && !loading) {
             fetch('./dummy_data.json')
                 .then((response) => response.json())
@@ -107,16 +106,16 @@ const Solar = ({BaseUrl, Url}) => {
                     console.error('Error fetching dummy data:', error);
                 });
         }
-    }, [imageLoaded, loading]); // Trigger when image is loaded
+    }, [imageLoaded, loading]);
 
     const handleImageLoad = () => {
-        setImageLoaded(true); // Set image loaded to true when the image loads
+        setImageLoaded(true);
     };
 
     const handleImageError = () => {
-        console.error('Image failed to load'); // Handle image load error
+        console.error('Image failed to load');
     };
-   
+
 
     const displayCounts = (data) => {
         const solarData = data.filter((i) => i.category === 'solar');
@@ -130,11 +129,8 @@ const Solar = ({BaseUrl, Url}) => {
         const margin = { top: 10, right: 10, bottom: 70, left: 20 };
 
         function updateDimensions() {
-            // const container = document.getElementById('grid-it-rl');
-            // const width = container.offsetWidth - margin.left - margin.right - 60;
-            // const height = container.offsetHeight - margin.top - margin.bottom - 70;
 
-            if (!containerRef.current) return; // Ensure the container exists
+            if (!containerRef.current) return;
 
             const container = containerRef.current;
             const width = container.offsetWidth - margin.left - margin.right - 60;
@@ -210,14 +206,15 @@ const Solar = ({BaseUrl, Url}) => {
 
     return (
         !loading && <div className="p-4">
+            {/* First Row Section */}
             <div className="grid grid-cols-2 gap-5">
                 <div className="relative block">
-                    <img id="overview-image" src="assets/Mask group.svg" alt="overview"  onLoad={handleImageLoad}
+                    <img id="overview-image" src="assets/Mask group.svg" alt="overview"
+                        onLoad={handleImageLoad}
                         onError={handleImageError}
                         className="block w-full h-full object-cover rounded-md" />
 
-                    <div className="absolute bottom-[7%] left-[5%] transform translate-x-[-20%] translate-y-[20%] 
-            p-2 bg-transparent text-white rounded-md z-10 flex items-center max-w-[calc(100%-40px)]">
+                    <div className="absolute bottom-[7%] left-[5%] transform translate-x-[-20%] translate-y-[20%] p-2 bg-transparent text-white rounded-md z-10 flex items-center max-w-[calc(100%-40px)]">
                         <div className="flex items-center">
                             <div className="mr-2">
                                 <img src="assets/Icons (T).png" className="h-10 max-h-1/2 max-w-full" alt='image' />
@@ -229,8 +226,7 @@ const Solar = ({BaseUrl, Url}) => {
                         </div>
                     </div>
 
-                    <div className="absolute bottom-[7%] left-[35%] transform translate-x-[-20%] translate-y-[20%] 
-            p-2 bg-transparent text-white rounded-md z-10 flex items-center max-w-[calc(100%-40px)]">
+                    <div className="absolute bottom-[7%] left-[35%] transform translate-x-[-20%] translate-y-[20%] p-2 bg-transparent text-white rounded-md z-10 flex items-center max-w-[calc(100%-40px)]">
                         <div className="flex items-center">
                             <div className="mr-2">
                                 <img src="assets/Icons-Status.png" className="h-10 max-h-1/2 max-w-full" alt='image' />
@@ -275,10 +271,11 @@ const Solar = ({BaseUrl, Url}) => {
                     </div>
                 </div>
             </div>
+            {/* Second Row Section */}
             <div className="grid grid-cols-2 gap-5 mt-2">
+                {/* Left Section */}
                 <div className="grid-item-left">
                     <div className="grid grid-cols-4 gap-2 mt-1">
-                        {/* Power Generated Yesterday */}
                         <div className="grid grid-rows-2 mt-2">
                             <div className="bg-[#051e1c] rounded-md mb-2 p-2 gap-3 flex flex-col justify-between">
                                 <div className="flex items-center justify-between mb-2">
@@ -287,7 +284,6 @@ const Solar = ({BaseUrl, Url}) => {
                                 </div>
                                 <p className="text-sm xl:text-base text-[#AFB2B2] text-start">Power Generated Yesterday</p>
                             </div>
-                            {/* Hours Operated Yesterday */}
                             <div className="bg-[#051e1c] rounded-md mb-2 p-2 gap-3 flex flex-col justify-between">
                                 <div className="flex items-center justify-between mb-2">
                                     <img src="assets/Icons (5).svg" alt="icon" />
@@ -297,7 +293,6 @@ const Solar = ({BaseUrl, Url}) => {
                             </div>
                         </div>
 
-                        {/* Utilization Factor */}
                         <div className="grid grid-rows-2 mt-2">
                             <div className="bg-[#051e1c] rounded-md mb-2 p-2 flex flex-col justify-between">
                                 <div className="flex items-center justify-between">
@@ -306,7 +301,6 @@ const Solar = ({BaseUrl, Url}) => {
                                 </div>
                                 <p className="text-sm xl:text-base text-[#AFB2B2] text-start">Utilization Factor</p>
                             </div>
-                            {/* Power Factor */}
                             <div className="bg-[#051e1c] rounded-md mb-2 p-2 flex flex-col justify-between">
                                 <div className="flex items-center justify-between">
                                     <img src="assets/Icons (6).svg" alt="icon" />
@@ -316,7 +310,6 @@ const Solar = ({BaseUrl, Url}) => {
                             </div>
                         </div>
 
-                        {/* Frequency and Breaker Status */}
                         <div className="grid grid-rows-2 mt-2">
                             <div className="bg-[#051e1c] rounded-md mb-2 p-2 flex flex-col justify-between">
                                 <div className="flex items-center justify-between">
@@ -325,7 +318,6 @@ const Solar = ({BaseUrl, Url}) => {
                                 </div>
                                 <p className="text-sm xl:text-base text-[#AFB2B2] text-start">Frequency (Hz)</p>
                             </div>
-                            {/* Breaker Status */}
                             <div className="bg-[#051e1c] rounded-md mb-2 p-2 flex flex-col justify-between">
                                 <div className="flex items-center justify-between">
                                     <img src="assets/Icons (4).svg" alt="icon" />
@@ -335,7 +327,6 @@ const Solar = ({BaseUrl, Url}) => {
                             </div>
                         </div>
 
-                        {/* Maintenance */}
                         <div className="grid grid-cols-1 mt-2">
                             <div className="bg-[#051e1c] rounded-md mb-2 p-2 py-4 flex flex-col justify-between">
                                 <p className="text-sm xl:text-base text-white">Maintenance</p>
@@ -351,33 +342,32 @@ const Solar = ({BaseUrl, Url}) => {
                         </div>
                     </div>
 
-                    {/* Voltage and Current Table */}
                     <div className="grid mt-2 rounded-md">
                         <div className="grid-item-left-down mt-2 bg-[#030F0E] mb-7 rounded-md">
                             <table className="table-style w-full border-collapse">
                                 <thead className="bg-[#051E1C] text-[#68BFB6]">
                                     <tr className="text-xs xl:text-sm font-medium">
-                                        <th className="whitespace-nowrap text-center p-5 xl:p-6 rounded-tl-lg"></th> {/* Top-left radius */}
+                                        <th className="whitespace-nowrap text-center p-5 xl:p-6 rounded-tl-lg"></th>
                                         <th className="text-center font-medium">Voltage (L-L)(V)</th>
                                         <th className="text-center font-medium">Voltage (L-N)(V)</th>
-                                        <th className="text-center rounded-tr-lg font-medium">Current (Amp)</th> {/* Top-right radius */}
+                                        <th className="text-center rounded-tr-lg font-medium">Current (Amp)</th>
                                     </tr>
                                 </thead>
                                 <tbody className="bg-[#030F0E] text-[#CACCCC]">
                                     <tr>
-                                        <td className="text-center p-4 rounded-l-lg text-sm xl:text-base">L1 Phase</td> {/* Left-side rounded */}
+                                        <td className="text-center p-4 rounded-l-lg text-sm xl:text-base">L1 Phase</td>
                                         <td id="voltage-l-l-phase1" className="text-center p-4 text-sm xl:text-base">{data.voltagel.phase1}</td>
                                         <td id="voltage-l-n-phase1" className="text-center p-4 text-sm xl:text-base">{data.voltagen.phase1}</td>
                                         <td id="current-phase1" className="text-center p-4 text-sm xl:text-base">{data.current.phase1}</td>
                                     </tr>
                                     <tr>
-                                        <td className="text-center p-4 rounded-l-lg text-sm xl:text-base">L2 Phase</td> {/* Left-side rounded */}
+                                        <td className="text-center p-4 rounded-l-lg text-sm xl:text-base">L2 Phase</td>
                                         <td id="voltage-l-l-phase2" className="text-center p-4 text-sm xl:text-base">{data.voltagel.phase2}</td>
                                         <td id="voltage-l-n-phase2" className="text-center p-4 text-sm xl:text-base">{data.voltagen.phase2}</td>
                                         <td id="current-phase2" className="text-center p-4 text-sm xl:text-base">{data.current.phase2}</td>
                                     </tr>
                                     <tr>
-                                        <td className="text-center p-4 rounded-bl-lg text-sm xl:text-base">L3 Phase</td> {/* Bottom-left radius */}
+                                        <td className="text-center p-4 rounded-bl-lg text-sm xl:text-base">L3 Phase</td>
                                         <td id="voltage-l-l-phase3" className="text-center p-4 text-sm xl:text-base">{data.voltagel.phase3}</td>
                                         <td id="voltage-l-n-phase3" className="text-center p-4 text-sm xl:text-base">{data.voltagen.phase3}</td>
                                         <td id="current-phase3" className="text-center p-4 rounded-br-lg text-sm xl:text-base">{data.current.phase3}</td>
@@ -388,11 +378,11 @@ const Solar = ({BaseUrl, Url}) => {
                         </div>
                     </div>
                 </div>
-
+                {/* Right Section */}
                 <div className="grid-item-right">
                     <div className="grid-item-right-left">
                         <div className="grid-item-left-down mt-2">
-                            <div className="notification-style p-2 rounded-md bg-[#030F0E]">
+                            <div className="p-2">
                                 <div className="text-white text-[20px] flex justify-between items-start">
                                     <div className="mb-3 text-base xl:text-lg font-bold">
                                         Notifications
@@ -407,7 +397,6 @@ const Solar = ({BaseUrl, Url}) => {
                                                 </text>
                                             </svg>
                                         </p>
-
                                         <p className="flex items-center ml-4 text-[#AFB2B2] text-sm xl:text-base">
                                             Shutdown
                                             <svg className="ml-2" width="21" height="22" viewBox="0 0 21 22" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -419,9 +408,8 @@ const Solar = ({BaseUrl, Url}) => {
                                         </p>
                                     </div>
                                 </div>
-
                             </div>
-                            <div className="bg-[#030F0E] rounded-lg pb-2.5 overflow-y-auto max-h-[200px]"
+                            <div className="bg-[#030F0E] rounded-lg pb-2.5 overflow-y-auto h-[230px] xl:h-[260px]"
                                 style={{
                                     scrollbarWidth: 'thin',
                                     scrollbarColor: '#0A3D38 #0F544C',
@@ -430,7 +418,6 @@ const Solar = ({BaseUrl, Url}) => {
                                     <thead className="bg-[#051E1C] text-left sticky top-0 z-20 text-[#68BFB6]">
                                         <tr className="text-xs xl:text-sm">
                                             <th className="px-3 xl:px-4 py-2 xl:py-3 rounded-tl-lg font-medium">Fault Code</th>
-                                            {/* <th>Categories</th> */}
                                             <th className="px-3 py-2 font-medium">Description</th>
                                             <th className="px-3 py-2 font-medium">Severity</th>
                                             <th className="px-3 py-2 font-medium">Status</th>
@@ -440,7 +427,7 @@ const Solar = ({BaseUrl, Url}) => {
                                     <tbody className="bg-[#030F0E] capitalize text-[#CACCCC]" id="alert-container">
                                         {alertsData.filter(i => i.category === 'solar').map((item, index) => (
                                             <tr key={index}>
-                                                <td className="px-3 xl:px-4 py-2 xl:py-3">{item.fault_code}</td>
+                                                <td className="px-3 xl:px-4 py-4">{item.fault_code}</td>
                                                 <td className="px-3 py-2">{item.description}</td>
                                                 <td className={`px-3 py-3 whitespace-nowrap ${item.severity.toLowerCase() === 'alert' ? 'severity-alert' : item.severity.toLowerCase() === 'shutdown' ? 'severity-shutdown' : ''}`}>
                                                     {item.severity}
@@ -454,7 +441,6 @@ const Solar = ({BaseUrl, Url}) => {
                                     </tbody>
                                 </table>
                             </div>
-
                         </div>
                         <div className="grid-item-left-down mt-5 bg-[#030F0E] mb-7 rounded-lg pb-0">
                             <table className="table-style w-full border-collapse">
@@ -482,12 +468,9 @@ const Solar = ({BaseUrl, Url}) => {
                                 </tbody>
                             </table>
                         </div>
-
                     </div>
                 </div>
             </div>
-
-
         </div>
     )
 }

@@ -1,9 +1,10 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable jsx-a11y/heading-has-content */
 /* eslint-disable jsx-a11y/img-redundant-alt */
 import React, { useState, useEffect, useRef } from 'react';
 import * as d3 from 'd3';
 
-const Biogas = ({BaseUrl, Url}) => {
+const Biogas = ({ BaseUrl, Url }) => {
     const [data, setData] = useState({})
     const [alertsData, setAlertsData] = useState([]);
     const [alertCount, setAlertCount] = useState(0);
@@ -45,7 +46,7 @@ const Biogas = ({BaseUrl, Url}) => {
     const updateData = async (newData) => {
         try {
             const response = await fetch(`${Url}/biogas/1`, {
-                method: 'PATCH', 
+                method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
                 },
@@ -64,36 +65,35 @@ const Biogas = ({BaseUrl, Url}) => {
 
     useEffect(() => {
         const handleOnlineStatus = () => {
-          setIsOnline(navigator.onLine);
+            setIsOnline(navigator.onLine);
         };
-    
+
         window.addEventListener('online', handleOnlineStatus);
         window.addEventListener('offline', handleOnlineStatus);
-    
-        return () => {
-          window.removeEventListener('online', handleOnlineStatus);
-          window.removeEventListener('offline', handleOnlineStatus);
-        };
-      }, []);
 
-      useEffect(() => {
+        return () => {
+            window.removeEventListener('online', handleOnlineStatus);
+            window.removeEventListener('offline', handleOnlineStatus);
+        };
+    }, []);
+
+    useEffect(() => {
         fetchAlerts();
-    
+
         const interval = setInterval(() => {
-          fetchAlerts(); 
+            fetchAlerts();
         }, 5000);
-    
-        return () => clearInterval(interval); 
-      }, []);
-    
-      useEffect(() => {
+
+        return () => clearInterval(interval);
+    }, []);
+
+    useEffect(() => {
         if (isOnline && data) {
-          updateData(data); 
+            updateData(data);
         }
-      }, [isOnline, data]); 
-    
-      // Use another useEffect to handle image onload after rendering
-      useEffect(() => {
+    }, [isOnline, data]);
+
+    useEffect(() => {
         if (imageLoaded && !loading) {
             fetch('./dummy_data.json')
                 .then((response) => response.json())
@@ -105,16 +105,16 @@ const Biogas = ({BaseUrl, Url}) => {
                     console.error('Error fetching dummy data:', error);
                 });
         }
-    }, [imageLoaded, loading]); // Trigger when image is loaded
+    }, [imageLoaded, loading]);
 
     const handleImageLoad = () => {
-        setImageLoaded(true); // Set image loaded to true when the image loads
+        setImageLoaded(true);
     };
 
     const handleImageError = () => {
-        console.error('Image failed to load'); // Handle image load error
+        console.error('Image failed to load');
     };
-   
+
 
     const displayCounts = (data) => {
         const biogasData = data.filter((i) => i.category === 'biogas');
@@ -128,11 +128,8 @@ const Biogas = ({BaseUrl, Url}) => {
         const margin = { top: 10, right: 10, bottom: 60, left: 20 };
 
         function updateDimensions() {
-            // const container = document.getElementById('grid-it-rl');
-            // const width = container.offsetWidth - margin.left - margin.right - 60;
-            // const height = container.offsetHeight - margin.top - margin.bottom - 70;
 
-            if (!containerRef.current) return; // Ensure the container exists
+            if (!containerRef.current) return;
 
             const container = containerRef.current;
             const width = container.offsetWidth - margin.left - margin.right - 60;
@@ -207,6 +204,7 @@ const Biogas = ({BaseUrl, Url}) => {
     };
     return (
         !loading && <div className="p-4">
+            {/* First Row Section */}
             <div className="grid grid-cols-2 gap-5">
                 <div className="relative">
                     <img id="overview-image" src="assets/image.svg" width="100%" alt="overview" onLoad={handleImageLoad}
@@ -259,7 +257,9 @@ const Biogas = ({BaseUrl, Url}) => {
                     </div>
                 </div>
             </div>
+            {/* Second Row Section */}
             <div className="grid grid-cols-2 gap-5 mt-2 ">
+                {/* Left Section */}
                 <div className="grid-item-left">
                     <div className="grid grid-cols-4 gap-2 mt-1">
                         <div className="grid grid-rows-2 mt-2">
@@ -357,15 +357,14 @@ const Biogas = ({BaseUrl, Url}) => {
                                     </tr>
                                 </tbody>
                             </table>
-
                         </div>
                     </div>
                 </div>
-
+                {/* Right Section */}
                 <div className="grid-item-right">
                     <div className="grid-item-right-left">
                         <div className="grid-item-left-down mt-2">
-                            <div className="notification-style p-2 rounded-md bg-[#030F0E]">
+                            <div className="p-2">
                                 <div className="text-white text-[20px] flex justify-between items-start">
                                     <div className="mb-4 text-base xl:text-lg font-bold">
                                         Notifications
@@ -392,9 +391,8 @@ const Biogas = ({BaseUrl, Url}) => {
                                         </p>
                                     </div>
                                 </div>
-
                             </div>
-                            <div className="bg-[#030F0E] rounded-lg pb-2.5 overflow-y-auto max-h-[200px]"
+                            <div className="bg-[#030F0E] rounded-lg pb-2.5 overflow-y-auto h-[230px] xl:h-[260px]"
                                 style={{
                                     scrollbarWidth: 'thin',
                                     scrollbarColor: '#0A3D38 #0F544C',
@@ -412,7 +410,7 @@ const Biogas = ({BaseUrl, Url}) => {
                                     <tbody className="bg-[#030F0E] capitalize text-[#CACCCC]" id="alert-container">
                                         {alertsData.filter(i => i.category === 'biogas').map((item, index) => (
                                             <tr key={index}>
-                                                <td className="px-3 xl:px-4 py-2 xl:py-3">{item.fault_code}</td>
+                                                <td className="px-3 xl:px-4 py-4">{item.fault_code}</td>
                                                 <td className="px-3 py-2">{item.description}</td>
                                                 <td className={`px-3 py-3 whitespace-nowrap ${item.severity.toLowerCase() === 'alert' ? 'severity-alert' : item.severity.toLowerCase() === 'shutdown' ? 'severity-shutdown' : ''}`}>
                                                     {item.severity}
@@ -426,7 +424,6 @@ const Biogas = ({BaseUrl, Url}) => {
                                     </tbody>
                                 </table>
                             </div>
-
                         </div>
                         <div className="grid-item-left-down mt-6 bg-[#030F0E] mb-3 rounded-lg pb-0">
                             <table className="table-style w-full border-collapse">
@@ -454,11 +451,9 @@ const Biogas = ({BaseUrl, Url}) => {
                                 </tbody>
                             </table>
                         </div>
-
                     </div>
                 </div>
             </div>
-
         </div>
     )
 }

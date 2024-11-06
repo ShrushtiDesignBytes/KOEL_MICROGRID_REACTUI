@@ -15,7 +15,6 @@ const Overview = ({ BaseUrl, Url }) => {
     let resizeTimeout = null;
     const [data, setData] = useState({});
     const [isOnline, setIsOnline] = useState(navigator.onLine);
-
     const fetchConfig = () => {
         fetch(`${BaseUrl}/overview`)
             .then((response) => response.json())
@@ -38,7 +37,7 @@ const Overview = ({ BaseUrl, Url }) => {
     const updateData = async (newData) => {
         try {
             const response = await fetch(`${Url}/overview/1`, {
-                method: 'PATCH', 
+                method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
                 },
@@ -57,33 +56,33 @@ const Overview = ({ BaseUrl, Url }) => {
 
     useEffect(() => {
         const handleOnlineStatus = () => {
-          setIsOnline(navigator.onLine);
+            setIsOnline(navigator.onLine);
         };
-    
+
         window.addEventListener('online', handleOnlineStatus);
         window.addEventListener('offline', handleOnlineStatus);
-    
-        return () => {
-          window.removeEventListener('online', handleOnlineStatus);
-          window.removeEventListener('offline', handleOnlineStatus);
-        };
-      }, []);
 
-      useEffect(() => {
+        return () => {
+            window.removeEventListener('online', handleOnlineStatus);
+            window.removeEventListener('offline', handleOnlineStatus);
+        };
+    }, []);
+
+    useEffect(() => {
         fetchConfig();
-    
+
         const interval = setInterval(() => {
-          fetchConfig(); 
+            fetchConfig();
         }, 5000);
-    
-        return () => clearInterval(interval); 
-      }, []);
-    
-      useEffect(() => {
+
+        return () => clearInterval(interval);
+    }, []);
+
+    useEffect(() => {
         if (isOnline && data) {
-          updateData(data); 
+            updateData(data);
         }
-      }, [isOnline, data]); 
+    }, [isOnline, data]);
 
 
     const handleDotClick = (index) => {
@@ -111,13 +110,12 @@ const Overview = ({ BaseUrl, Url }) => {
         fetchData();
 
         const handleResize = () => {
-            if (resizeTimeout) clearTimeout(resizeTimeout); 
-            resizeTimeout = setTimeout(() => fetchData(), 300); 
+            if (resizeTimeout) clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => fetchData(), 300);
         };
 
         window.addEventListener('resize', handleResize);
 
-        // Cleanup on unmount
         return () => {
             window.removeEventListener('resize', handleResize);
             if (tooltipRef.current) {
@@ -127,37 +125,33 @@ const Overview = ({ BaseUrl, Url }) => {
     }, [imageLoaded, loading]);
 
     const handleImageLoad = () => {
-        setImageLoaded(true); // Set image loaded to true when the image loads
+        setImageLoaded(true);
     };
 
     const handleImageError = () => {
-        console.error('Image failed to load'); // Handle image load error
+        console.error('Image failed to load');
     };
 
     const displayDataCurveGraph = (data) => {
-        // Ensure that the ref exists and has a parent element
+
         if (!myDatavizRef.current || !myDatavizRef.current.parentElement) {
             console.error("Graph container or its parent doesn't exist.");
             return;
         }
 
-        // Clear the previous graph
         d3.select(myDatavizRef.current).selectAll('svg').remove();
 
-        // Set dimensions and margins
         const margin = { top: 20, right: 30, bottom: 20, left: 20 };
         const width = myDatavizRef.current.parentElement.offsetWidth
             ? myDatavizRef.current.parentElement.offsetWidth - margin.left - margin.right
-            : 500; // Fallback width
+            : 500;
         const height = myDatavizRef.current.parentElement.offsetHeight - margin.top - margin.bottom;
 
-        // If the parent element width is 0, delay the rendering until the element is visible
         if (width <= 0) {
             console.error("Parent element has zero width.");
             return;
         }
 
-        // Append the SVG object
         const svg = d3.select(myDatavizRef.current)
             .append('svg')
             .attr('width', width + margin.left + margin.right)
@@ -165,7 +159,6 @@ const Overview = ({ BaseUrl, Url }) => {
             .append('g')
             .attr('transform', `translate(${margin.left},${margin.top})`);
 
-        // X and Y scales
         const x = d3.scaleLinear().domain([8, 16]).range([0, width]);
         const y = d3.scaleLinear().domain([0, d3.max(data, (d) => +d.power)]).nice().range([height, 0]);
 
@@ -218,8 +211,8 @@ const Overview = ({ BaseUrl, Url }) => {
             .attr('stroke-width', 0)
             .attr('d', d3.area()
                 .x(d => x(d.hour))
-                .y0(height) // Bottom of the shadow area
-                .y1(d => y(+d.power)) // Follows the curve
+                .y0(height)
+                .y1(d => y(+d.power))
                 .curve(d3.curveBasis)
             );
 
@@ -232,8 +225,6 @@ const Overview = ({ BaseUrl, Url }) => {
         }
     };
 
-
-    // Function to format hour to include AM/PM
     function formatAMPM(hour) {
         return hour >= 12
             ? hour === 12
@@ -258,20 +249,20 @@ const Overview = ({ BaseUrl, Url }) => {
                     {
                         data: values,
                         backgroundColor: [
-                            'rgba(118, 171, 174, 1)', // wind
-                            'rgba(176, 197, 164, 1)', // mains
-                            'rgba(145, 149, 246, 1)', // ESS
-                            'rgba(94, 136, 68, 1)',   // biogas
-                            'rgba(242, 193, 141, 1)', // genset
-                            'rgba(243, 165, 49, 1)',  // solar
+                            'rgba(118, 171, 174, 1)',
+                            'rgba(176, 197, 164, 1)',
+                            'rgba(145, 149, 246, 1)',
+                            'rgba(94, 136, 68, 1)',
+                            'rgba(242, 193, 141, 1)',
+                            'rgba(243, 165, 49, 1)',
                         ],
                         borderColor: [
-                            'rgba(118, 171, 174, 1)', // wind
-                            'rgba(176, 197, 164, 1)', // mains
-                            'rgba(145, 149, 246, 1)', // ESS
-                            'rgba(94, 136, 68, 1)',   // biogas
-                            'rgba(242, 193, 141, 1)', // genset
-                            'rgba(243, 165, 49, 1)',  // solar
+                            'rgba(118, 171, 174, 1)',
+                            'rgba(176, 197, 164, 1)',
+                            'rgba(145, 149, 246, 1)',
+                            'rgba(94, 136, 68, 1)',
+                            'rgba(242, 193, 141, 1)',
+                            'rgba(243, 165, 49, 1)',
                         ],
                         borderWidth: 1,
                         cutout: '70%',
@@ -287,7 +278,6 @@ const Overview = ({ BaseUrl, Url }) => {
                         display: false,
                     },
                 },
-                cutoutPercentage: 50, // Keep the cutout percentage as needed.
             },
         });
     };
@@ -300,7 +290,7 @@ const Overview = ({ BaseUrl, Url }) => {
 
     return (
         !loading && <div className="p-4">
-
+            {/* First Row Section */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
                 {/* Left Section */}
                 <div>
@@ -354,7 +344,7 @@ const Overview = ({ BaseUrl, Url }) => {
                     <p className="mt-2 text-white text-base xl:text-lg font-light mb-5">
                         Total Daily Generation:
                         <span className="bg-[#0821FF] text-sm xl:text-base rounded-full px-3 py-1 ml-2 inline-block font-extralight">
-                        {data.daily_generation} kWh
+                            {data.daily_generation} kWh
                         </span>
                     </p>
                     <div className="mt-4">
@@ -367,7 +357,7 @@ const Overview = ({ BaseUrl, Url }) => {
                     </div>
                 </div>
             </div>
-
+            {/* Second Row Section */}
             <div className="grid grid-cols-[35.5%_63%] gap-4 pt-2">
                 <div className="pie">
                     <div className="text-white flex mb-5 text-lg xl:text-xl">Energy Generation Comparison</div>
@@ -375,7 +365,6 @@ const Overview = ({ BaseUrl, Url }) => {
                     <div className="bg-[#051e1c] rounded-lg mt-4 h-[89%]">
                         <div className="flex justify-center items-center w-[250px] h-[250px] relative mx-auto">
                             <canvas id="myChart" ref={doughnutChartRef} className="w-full h-full" width={200} height={200}></canvas>
-                            {/* <img src="../assets/Vector.png" className="center-image" alt="Center Image" /> */}
                         </div>
 
                         <div className="flex items-center p-5 justify-around mt-2">
@@ -445,11 +434,10 @@ const Overview = ({ BaseUrl, Url }) => {
                                 ))}
                             </tbody>
                         </table>
-
                     </div>
                 </div>
             </div>
-
+            {/* Third Row Section */}
             <div className="grid grid-cols-[36%_22%_22%_17%] mt-2 gap-4 mr-2">
                 <div className="grid grid-cols-2 gap-4">
                     <div className="bg-[#051e1c] rounded-lg flex flex-col justify-around items-center">
@@ -517,20 +505,18 @@ const Overview = ({ BaseUrl, Url }) => {
                             <img src="assets/dollar.svg" className="w-[35px]" alt='image' />
                             <p className="text-white ml-3">Savings</p>
                         </div>
-                        {/* <div className="p-3 flex flex-col justify-between"> */}
-                            <div className="mt-2 ml-2">
-                                <p id="savings" className="text-white my-1.5 text-lg xl:text-xl">INR {data.savings.savings}</p>
-                                <p className="text-[#959999] mt-1.5 text-xs xl:text-sm">(per month)</p>
-                            </div>
-                            <div className="mt-4 ml-2">
-                                <p id="savingt" className="text-white my-1.5 text-lg xl:text-xl">INR {data.savings.savingt}</p>
-                                <p className="text-[#959999] my-1.5 text-xs xl:text-sm">(till date)</p>
-                            </div>
-                        {/* </div> */}
+                        <div className="mt-2 ml-2">
+                            <p id="savings" className="text-white my-1.5 text-lg xl:text-xl">INR {data.savings.savings}</p>
+                            <p className="text-[#959999] mt-1.5 text-xs xl:text-sm">(per month)</p>
+                        </div>
+                        <div className="mt-4 ml-2">
+                            <p id="savingt" className="text-white my-1.5 text-lg xl:text-xl">INR {data.savings.savingt}</p>
+                            <p className="text-[#959999] my-1.5 text-xs xl:text-sm">(till date)</p>
+                        </div>
                     </div>
                 </div>
             </div>
-
+            {/* Fourth Row Section */}
             <div className="grid grid-cols-[36%_18%_44%] gap-4 pr-3 pb-5 mt-3.5">
                 <div className="grid">
                     <div className="bg-[#051e1c] rounded-lg pr-5 flex flex-col justify-evenly">
@@ -541,7 +527,6 @@ const Overview = ({ BaseUrl, Url }) => {
                             </div>
                             <div className="text-white text-lg ml-2.5 m-0 md:text-base text-nowrap" id="total">{data.energy.total} (kWh)</div>
                         </div>
-
                         <div className="mb-0">
                             <div className="flex items-center justify-between ml-5 mb-3">
                                 <p className="text-sm xl:text-base text-[#AFB2B2] m-0">From Renewable Resources</p>
@@ -561,7 +546,6 @@ const Overview = ({ BaseUrl, Url }) => {
                         <p className="text-[#7A7F7F] text-base xl:text-lg">Alerts</p>
                         <div className="text-white text-xl xl:text-2xl" id="alerts">{data.alerts}</div>
                     </div>
-
                     <div className="bg-[#051e1c] rounded-lg p-5 flex items-center justify-between">
                         <div className="h-2.5 w-2.5 bg-red-600 rounded-full"></div>
                         <p className="text-[#7A7F7F] text-base xl:text-lg">Shutdowns</p>
@@ -594,7 +578,6 @@ const Overview = ({ BaseUrl, Url }) => {
                     </div>
                 </div>
             </div>
-
         </div>
 
     )

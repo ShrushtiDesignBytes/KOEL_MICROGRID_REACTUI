@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable jsx-a11y/heading-has-content */
 /* eslint-disable jsx-a11y/img-redundant-alt */
 import React, { useState, useEffect, useRef } from 'react';
@@ -206,6 +207,7 @@ const Mains = ({BaseUrl, Url}) => {
     };
     return (
        !loading &&  <div className="p-4">
+        {/* First Row Section */}
             <div className="grid grid-cols-2 gap-5">
                 <div className="relative">
                     <img id="overview-image" src="assets/mains.svg" width="100%" alt="overview" onLoad={handleImageLoad}
@@ -258,7 +260,9 @@ const Mains = ({BaseUrl, Url}) => {
                     </div>
                 </div>
             </div>
+            {/* Second Row Section */}
             <div className="grid grid-cols-2 gap-5 mt-2 ">
+                {/* Left Section */}
                 <div className="grid-item-left">
                     <div className="grid grid-cols-4 gap-2 mt-1">
                         <div className="grid grid-rows-2 mt-2">
@@ -329,27 +333,27 @@ const Mains = ({BaseUrl, Url}) => {
                             <table className="table-style w-full border-collapse">
                                 <thead className="bg-[#051E1C] text-[#68BFB6]">
                                     <tr className="text-xs xl:text-sm font-medium">
-                                        <th className="whitespace-nowrap text-center p-5 xl:p-6 rounded-tl-lg"></th> {/* Top-left radius */}
+                                        <th className="whitespace-nowrap text-center p-5 xl:p-6 rounded-tl-lg"></th>
                                         <th className="text-center font-medium">Voltage (L-L)(V)</th>
                                         <th className="text-center font-medium">Voltage (L-N)(V)</th>
-                                        <th className="text-center rounded-tr-lg font-medium">Current (Amp)</th> {/* Top-right radius */}
+                                        <th className="text-center rounded-tr-lg font-medium">Current (Amp)</th>
                                     </tr>
                                 </thead>
                                 <tbody className="bg-[#030F0E] text-[#CACCCC]">
                                     <tr>
-                                        <td className="text-center p-4 rounded-l-lg text-sm xl:text-base">L1 Phase</td> {/* Left-side rounded */}
+                                        <td className="text-center p-4 rounded-l-lg text-sm xl:text-base">L1 Phase</td>
                                         <td id="voltage-l-l-phase1" className="text-center p-4 text-sm xl:text-base">{data.voltagel.phase1}</td>
                                         <td id="voltage-l-n-phase1" className="text-center p-4 text-sm xl:text-base">{data.voltagen.phase1}</td>
                                         <td id="current-phase1" className="text-center p-4 text-sm xl:text-base">{data.current.phase1}</td>
                                     </tr>
                                     <tr>
-                                        <td className="text-center p-4 rounded-l-lg text-sm xl:text-base">L2 Phase</td> {/* Left-side rounded */}
+                                        <td className="text-center p-4 rounded-l-lg text-sm xl:text-base">L2 Phase</td>
                                         <td id="voltage-l-l-phase2" className="text-center p-4 text-sm xl:text-base">{data.voltagel.phase2}</td>
                                         <td id="voltage-l-n-phase2" className="text-center p-4 text-sm xl:text-base">{data.voltagen.phase2}</td>
                                         <td id="current-phase2" className="text-center p-4 text-sm xl:text-base">{data.current.phase2}</td>
                                     </tr>
                                     <tr>
-                                        <td className="text-center p-4 rounded-bl-lg text-sm xl:text-base">L3 Phase</td> {/* Bottom-left radius */}
+                                        <td className="text-center p-4 rounded-bl-lg text-sm xl:text-base">L3 Phase</td>
                                         <td id="voltage-l-l-phase3" className="text-center p-4 text-sm xl:text-base">{data.voltagel.phase3}</td>
                                         <td id="voltage-l-n-phase3" className="text-center p-4 text-sm xl:text-base">{data.voltagen.phase3}</td>
                                         <td id="current-phase3" className="text-center p-4 rounded-br-lg text-sm xl:text-base">{data.current.phase3}</td>
@@ -360,11 +364,11 @@ const Mains = ({BaseUrl, Url}) => {
                         </div>
                     </div>
                 </div>
-
+                {/* Right Section */}
                 <div className="grid-item-right">
                     <div className="grid-item-right-left">
                         <div className="grid-item-left-down mt-2">
-                            <div className="notification-style p-2 rounded-md bg-[#030F0E]">
+                            <div className="p-2">
                                 <div className="text-white text-[20px] flex justify-between items-start">
                                     <div className="mb-4 text-base xl:text-lg font-bold">
                                         Notifications
@@ -391,9 +395,8 @@ const Mains = ({BaseUrl, Url}) => {
                                         </p>
                                     </div>
                                 </div>
-
                             </div>
-                            <div className="bg-[#030F0E] rounded-lg pb-2.5 overflow-y-auto max-h-[200px]"
+                            <div className="bg-[#030F0E] rounded-lg pb-2.5 overflow-y-auto h-[230px] xl:h-[260px]"
                                 style={{
                                     scrollbarWidth: 'thin',
                                     scrollbarColor: '#0A3D38 #0F544C',
@@ -402,7 +405,6 @@ const Mains = ({BaseUrl, Url}) => {
                                     <thead className="bg-[#051E1C] text-left sticky top-0 z-20 text-[#68BFB6]">
                                         <tr className="text-xs xl:text-sm">
                                             <th className="px-3 xl:px-4 py-2 xl:py-3 rounded-tl-lg font-medium">Fault Code</th>
-                                            {/* <th>Categories</th> */}
                                             <th className="px-3 py-2 font-medium">Description</th>
                                             <th className="px-3 py-2 font-medium">Severity</th>
                                             <th className="px-3 py-2 font-medium">Status</th>
@@ -412,7 +414,7 @@ const Mains = ({BaseUrl, Url}) => {
                                     <tbody className="bg-[#030F0E] capitalize text-[#CACCCC]" id="alert-container">
                                         {alertsData.filter(i => i.category === 'mains').map((item, index) => (
                                             <tr key={index}>
-                                                <td className="px-3 xl:px-4 py-2 xl:py-3">{item.fault_code}</td>
+                                                <td className="px-3 xl:px-4 py-4">{item.fault_code}</td>
                                                 <td className="px-3 py-2">{item.description}</td>
                                                 <td className={`px-3 py-3 whitespace-nowrap ${item.severity.toLowerCase() === 'alert' ? 'severity-alert' : item.severity.toLowerCase() === 'shutdown' ? 'severity-shutdown' : ''}`}>
                                                     {item.severity}
@@ -426,7 +428,6 @@ const Mains = ({BaseUrl, Url}) => {
                                     </tbody>
                                 </table>
                             </div>
-
                         </div>
                         <div className="grid-item-left-down mt-5 bg-[#030F0E] mb-7 rounded-lg pb-0">
                             <table className="table-style w-full border-collapse">
@@ -454,11 +455,9 @@ const Mains = ({BaseUrl, Url}) => {
                                 </tbody>
                             </table>
                         </div>
-
                     </div>
                 </div>
             </div>
-
         </div>
     )
 }

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable jsx-a11y/heading-has-content */
 /* eslint-disable jsx-a11y/img-redundant-alt */
 import React, { useEffect, useState } from 'react';
@@ -96,6 +97,7 @@ const Ess = ({ BaseUrl, Url }) => {
     
     return (
         !loading && <div className="p-4">
+            {/* First Row Section */}
             <div className="grid grid-cols-2 gap-5">
                 <div className="relative">
                     <img id="overview-image" src="assets/ess.svg" width="100%" alt="overview" className="block w-full h-full object-cover rounded-md" />
@@ -138,12 +140,10 @@ const Ess = ({ BaseUrl, Url }) => {
                     </div>
 
                     <div className="grid-it-rl rounded-lg mr-0 p-4 bg-[#051e1c]">
-                        {/* Health Index Title */}
                         <div className="ml-2">
                             <p className="text-white text-start text-base xl:text-lg font-bold">Health Index</p>
                         </div>
 
-                        {/* Color Boxes */}
                         <div className="flex ml-2 justify-between mt-5">
                             <div className="bg-[#F12D2D] h-[10px] w-[90%] mr-[10px] ml-0"></div>
                             <div className="h-[10px] w-[90%] mr-[10px] ml-0 bg-[#FD9C2B]"></div>
@@ -156,7 +156,6 @@ const Ess = ({ BaseUrl, Url }) => {
                             <div className="h-[10px] w-[90%] mr-[10px] ml-0 bg-[#199E2E]"></div>
                         </div>
 
-                        {/* Maintenance Information */}
                         <div className="flex justify-between p-2 rounded-b-lg">
                             <div className="text-xs xl:text-sm whitespace-nowrap text-[#959999]">
                                 Last Maintenance Date: <span id="last-maintenance" className="text-white">{data.maintainance_last_date}</span>
@@ -168,16 +167,12 @@ const Ess = ({ BaseUrl, Url }) => {
                         </div>
                     </div>
                     <div className="flex justify-between gap-3 rounded-lg">
-                        {/* SOC Section */}
                         <div className="bg-[#030F0E] p-4 rounded-lg flex-1 text-center font-sans">
                             <div className="flex justify-between mb-2">
                                 <h5 className="text-[#CACCCC] text-lg xl:text-xl flex">SOC</h5>
                                 <h6 className="text-[#CF967B] text-xl xl:text-2xl">{data.soc}%</h6>
                             </div>
-
-                            {/* Gauge */}
                             <div className="gauge-wrapper">
-                                {/* Labels */}
                                 <div className="label-text label-0">0</div>
                                 <div className="label-text label-25">25</div>
                                 <div className="label-text label-50">50</div>
@@ -217,7 +212,6 @@ const Ess = ({ BaseUrl, Url }) => {
                                     </div>
                                 </div>
                             </div>
-
                             <div>
                                 <small>
                                     <span style={{ color: '#999' }}>Hours Left - 7 Hours</span>
@@ -225,13 +219,11 @@ const Ess = ({ BaseUrl, Url }) => {
                             </div>
                         </div>
 
-                        {/* Energy Consumption Section */}
                         <div className="bg-[#030F0E] p-4 rounded-lg flex-1">
                             <h5 className="text-[#CACCCC] xl:text-lg font-semibold text-base mb-5 flex justify-between">
                                 Energy Consumption
                             </h5>
 
-                            {/* Critical Load Progress Bar */}
                             <div className='pb-2 justify-between mb-2 gap-5'>
                                 <div className="w-full flex flex-col gap-2 mt-5">
                                     <div className="text-[#959999] text-sm xl:text-base text-start">Critical Load</div>
@@ -250,18 +242,15 @@ const Ess = ({ BaseUrl, Url }) => {
                                         </div>
                                         <h6 className="text-xs text-white mb-0" id="critical-load">{data.non_critical_load}%</h6>
                                     </div>
-
-
                                 </div>
                             </div>
-                            {/* You can add similar sections for other energy bars as needed */}
                         </div>
                     </div>
-
-
                 </div>
             </div>
+            {/* Second Row Section */}
             <div className="grid grid-cols-2 gap-5 mt-2 ">
+                {/* Left Section */}
                 <div className="grid-item-left">
                     <div className="grid grid-cols-4 gap-2 mt-1">
                         <div className="grid grid-rows-2 mt-2">
@@ -336,42 +325,41 @@ const Ess = ({ BaseUrl, Url }) => {
                             <table className="table-style w-full border-collapse">
                                 <thead className="bg-[#051E1C] text-[#68BFB6]">
                                     <tr className="text-xs xl:text-sm font-medium">
-                                        <th className="whitespace-nowrap text-center p-5 xl:p-6 rounded-tl-lg"></th> {/* Top-left radius */}
+                                        <th className="whitespace-nowrap text-center p-5 xl:p-6 rounded-tl-lg"></th>
                                         <th className="text-center font-medium">Voltage (L-L)(V)</th>
                                         <th className="text-center font-medium">Voltage (L-N)(V)</th>
-                                        <th className="text-center rounded-tr-lg font-medium">Current (Amp)</th> {/* Top-right radius */}
+                                        <th className="text-center rounded-tr-lg font-medium">Current (Amp)</th>
                                     </tr>
                                 </thead>
                                 <tbody className="bg-[#030F0E] text-[#CACCCC]">
                                     <tr>
-                                        <td className="text-center p-4 rounded-l-lg text-sm xl:text-base">L1 Phase</td> {/* Left-side rounded */}
+                                        <td className="text-center p-4 rounded-l-lg text-sm xl:text-base">L1 Phase</td>
                                         <td id="voltage-l-l-phase1" className="text-center p-4 text-sm xl:text-base">{data.voltagel.phase1}</td>
                                         <td id="voltage-l-n-phase1" className="text-center p-4 text-sm xl:text-base">{data.voltagen.phase1}</td>
                                         <td id="current-phase1" className="text-center p-4 text-sm xl:text-base">{data.current.phase1}</td>
                                     </tr>
                                     <tr>
-                                        <td className="text-center p-4 rounded-l-lg text-sm xl:text-base">L2 Phase</td> {/* Left-side rounded */}
+                                        <td className="text-center p-4 rounded-l-lg text-sm xl:text-base">L2 Phase</td>
                                         <td id="voltage-l-l-phase2" className="text-center p-4 text-sm xl:text-base">{data.voltagel.phase2}</td>
                                         <td id="voltage-l-n-phase2" className="text-center p-4 text-sm xl:text-base">{data.voltagen.phase2}</td>
                                         <td id="current-phase2" className="text-center p-4 text-sm xl:text-base">{data.current.phase2}</td>
                                     </tr>
                                     <tr>
-                                        <td className="text-center p-4 rounded-bl-lg text-sm xl:text-base">L3 Phase</td> {/* Bottom-left radius */}
+                                        <td className="text-center p-4 rounded-bl-lg text-sm xl:text-base">L3 Phase</td>
                                         <td id="voltage-l-l-phase3" className="text-center p-4 text-sm xl:text-base">{data.voltagel.phase3}</td>
                                         <td id="voltage-l-n-phase3" className="text-center p-4 text-sm xl:text-base">{data.voltagen.phase3}</td>
                                         <td id="current-phase3" className="text-center p-4 rounded-br-lg text-sm xl:text-base">{data.current.phase3}</td>
                                     </tr>
                                 </tbody>
                             </table>
-
                         </div>
                     </div>
                 </div>
-
+                {/* Right Section */}
                 <div className="grid-item-right">
                     <div className="grid-item-right-left">
                         <div className="grid-item-left-down mt-2">
-                            <div className="notification-style p-2 rounded-md bg-[#030F0E]">
+                            <div className="p-2">
                                 <div className="text-white text-[20px] flex justify-between items-start">
                                     <div className="mb-4 text-base xl:text-lg font-bold">
                                         Notifications
@@ -386,7 +374,6 @@ const Ess = ({ BaseUrl, Url }) => {
                                                 </text>
                                             </svg>
                                         </p>
-
                                         <p className="flex items-center ml-4 text-[#AFB2B2] text-sm xl:text-base">
                                             Shutdown
                                             <svg className="ml-2" width="21" height="22" viewBox="0 0 21 22" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -398,9 +385,8 @@ const Ess = ({ BaseUrl, Url }) => {
                                         </p>
                                     </div>
                                 </div>
-
                             </div>
-                            <div className="bg-[#030F0E] rounded-lg pb-2.5 overflow-y-auto max-h-[200px]"
+                            <div className="bg-[#030F0E] rounded-lg pb-2.5 overflow-y-auto h-[230px] xl:h-[260px]"
                                 style={{
                                     scrollbarWidth: 'thin',
                                     scrollbarColor: '#0A3D38 #0F544C',
@@ -409,7 +395,6 @@ const Ess = ({ BaseUrl, Url }) => {
                                     <thead className="bg-[#051E1C] text-left sticky top-0 z-20 text-[#68BFB6]">
                                         <tr className="text-xs xl:text-sm">
                                             <th className="px-3 py-2 xl:px-4 xl:py-3 rounded-tl-lg font-medium">Fault Code</th>
-                                            {/* <th>Categories</th> */}
                                             <th className="px-3 py-2 font-medium">Description</th>
                                             <th className="px-3 py-2 font-medium">Severity</th>
                                             <th className="px-3 py-2 font-medium">Status</th>
@@ -419,7 +404,7 @@ const Ess = ({ BaseUrl, Url }) => {
                                     <tbody className="bg-[#030F0E] capitalize text-[#CACCCC]" id="alert-container">
                                         {alertsData.filter(i => i.category === 'ess').map((item, index) => (
                                             <tr key={index}>
-                                                <td className="px-3 xl:px-4 py-2 xl:py-3">{item.fault_code}</td>
+                                                <td className="px-3 xl:px-4 py-4">{item.fault_code}</td>
                                                 <td className="px-3 py-2">{item.description}</td>
                                                 <td className={`px-3 py-3 whitespace-nowrap ${item.severity.toLowerCase() === 'alert' ? 'severity-alert' : item.severity.toLowerCase() === 'shutdown' ? 'severity-shutdown' : ''}`}>
                                                     {item.severity}
@@ -433,7 +418,6 @@ const Ess = ({ BaseUrl, Url }) => {
                                     </tbody>
                                 </table>
                             </div>
-
                         </div>
                         <div className="grid-item-left-down mt-6 bg-[#030F0E] mb-2 rounded-lg pb-0">
                             <table className="table-style w-full border-collapse">
@@ -461,7 +445,6 @@ const Ess = ({ BaseUrl, Url }) => {
                                 </tbody>
                             </table>
                         </div>
-
                     </div>
                 </div>
             </div>

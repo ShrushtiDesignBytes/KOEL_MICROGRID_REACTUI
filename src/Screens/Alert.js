@@ -30,8 +30,8 @@ const Alert = ({BaseUrl, Url}) => {
     
             
             const recentNotifications = data.filter(notification => {
-                const notificationDate = parseDateTime(notification.date_time); // Convert the date string to Date object
-                return notificationDate >= fiveDaysAgo; // Compare with the 5-day threshold
+                const notificationDate = parseDateTime(notification.date_time);
+                return notificationDate >= fiveDaysAgo;
             });
     
             console.log(recentNotifications);
