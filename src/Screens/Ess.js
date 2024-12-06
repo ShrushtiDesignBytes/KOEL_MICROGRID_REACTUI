@@ -361,7 +361,7 @@ const Ess = ({ BaseUrl, Url }) => {
                         <div className="grid-item-left-down mt-2">
                             <div className="p-2">
                                 <div className="text-white text-[20px] flex justify-between items-start">
-                                    <div className="mb-4 text-base xl:text-lg font-bold">
+                                    <div className="mb-3 text-base xl:text-lg font-bold">
                                         Notifications
                                     </div>
                                     <div className="flex">
