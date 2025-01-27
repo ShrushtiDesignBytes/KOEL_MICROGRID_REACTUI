@@ -15,7 +15,7 @@ import './App.css';
 
 const App = () => {
   const BaseUrl = "http://localhost:5000/micro"
-  const Url = "http://13.126.205.156/micro"
+  // const Url = "http://13.126.205.156/micro"
   
   return (
     <Router>
@@ -26,14 +26,14 @@ const App = () => {
           <Header />
           <div className="content flex-grow p-2  bg-gradient-to-r from-custom-green to-custom-dark">
             <Routes>
-              <Route path="/" element={<Overview BaseUrl = {BaseUrl} Url={Url}/>} />
-              <Route path="/solar" element={<Solar BaseUrl = {BaseUrl} Url={Url}/>} />
-              <Route path="/wind" element={<Wind BaseUrl = {BaseUrl}/>} Url={Url}/>
-              <Route path="/biogas" element={<Biogas BaseUrl = {BaseUrl} Url={Url}/>} />
-              <Route path="/mains" element={<Mains BaseUrl = {BaseUrl} Url={Url}/>} />
-              <Route path="/genset" element={<Genset BaseUrl = {BaseUrl} Url={Url}/>} />
-              <Route path="/ess" element={<Ess BaseUrl = {BaseUrl}/>} Url={Url}/>
-              <Route path="/alerts" element={<Alerts BaseUrl = {BaseUrl} Url={Url}/>} />
+              <Route path="/" element={<Overview BaseUrl = {BaseUrl}/>} />
+              <Route path="/solar" element={<Solar BaseUrl = {BaseUrl}/>} />
+              <Route path="/wind" element={<Wind BaseUrl = {BaseUrl}/>}/>
+              <Route path="/biogas" element={<Biogas BaseUrl = {BaseUrl}/>} />
+              <Route path="/mains" element={<Mains BaseUrl = {BaseUrl}/>} />
+              <Route path="/genset" element={<Genset BaseUrl = {BaseUrl}/>} />
+              <Route path="/ess" element={<Ess BaseUrl = {BaseUrl}/>}/>
+              <Route path="/alerts" element={<Alerts BaseUrl = {BaseUrl}/>} />
             </Routes>
           </div>
         </div>

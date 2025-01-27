@@ -1,10 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
 
-const Alert = ({BaseUrl, Url}) => {
+const Alert = ({ BaseUrl}) => {
 
     const [notifications, setNotifications] = useState([]);
-    const [isOnline, setIsOnline] = useState(navigator.onLine);
 
     const fetchNotifications = async () => {
         try {
@@ -14,102 +13,43 @@ const Alert = ({BaseUrl, Url}) => {
             }
 
             const data = await response.json();
-            console.log(data) 
-          
+            console.log(data)
+
             const now = new Date();
             const fiveDaysAgo = new Date();
-            fiveDaysAgo.setDate(now.getDate() - 5); 
-    
-            
+            fiveDaysAgo.setDate(now.getDate() - 5);
+
+
             const parseDateTime = (dateTimeString) => {
                 const [datePart, timePart] = dateTimeString.split(" | ");
                 const [day, month, year] = datePart.split("-").map(Number);
-                const dateFormatted = `${month}-${day}-${"20" + year} ${timePart}`; 
+                const dateFormatted = `${month}-${day}-${"20" + year} ${timePart}`;
                 return new Date(dateFormatted);
             };
-    
-            
+
+
             const recentNotifications = data.filter(notification => {
                 const notificationDate = parseDateTime(notification.date_time);
                 return notificationDate >= fiveDaysAgo;
             });
-    
+
             console.log(recentNotifications);
-           
+
             setNotifications(data);
-            sendNotifications(data);
         } catch (error) {
             console.error('Fetch Error:', error);
         }
     };
 
-    const sendNotifications = async (notificationsArray) => {
-        for (const notification of notificationsArray) {
-          //  await updateData(notification);
-        }
-        console.log('All notifications updated successfully');
-    };
-
-
-    const updateData = async (newData) => {
-        try {
-            const response = await fetch(`${Url}/alert`, {
-                method: 'PATCH', 
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(newData),
-            });
-
-            if (!response.ok) {
-                throw new Error(`Error: ${response.statusText}`);
-            }
-            const updatedData = await response.json();
-            console.log(updatedData)
-        } catch (err) {
-            console.log(err.message);
-        }
-    };
 
     useEffect(() => {
-        const handleOnlineStatus = () => {
-          setIsOnline(navigator.onLine);
-        };
-    
-        window.addEventListener('online', handleOnlineStatus);
-        window.addEventListener('offline', handleOnlineStatus);
-    
-        return () => {
-          window.removeEventListener('online', handleOnlineStatus);
-          window.removeEventListener('offline', handleOnlineStatus);
-        };
-      }, []);
-
-      useEffect(() => {
         fetchNotifications();
-    
+
         const interval = setInterval(() => {
             fetchNotifications();
         }, 5000);
-    
-        return () => clearInterval(interval); 
-      }, []);
-    
-    //   useEffect(() => {
-    //     if (isOnline && notifications) {
-    //       //updateData(notifications)
-    //     }
-    //   }, [isOnline, notifications]); 
 
-
-    useEffect(() => {
-        const link = window.location.href;
-        if (link.includes("alert")) {
-            const ele = document.getElementById("alert");
-            if (ele) {
-                ele.style.borderBottom = "2px solid #C37C5A";
-            }
-        }
+        return () => clearInterval(interval);
     }, []);
 
     return (
@@ -137,7 +77,7 @@ const Alert = ({BaseUrl, Url}) => {
                             </thead>
                             <tbody className="bg-[#030F0E] capitalize font-light" id="alert-container">
                                 {Array.isArray(notifications) ? (
-                                    notifications.map((item, index) => (
+                                    notifications.slice().reverse().map((item, index) => (
                                         <tr key={index}>
                                             <td className='px-4 xl:px-5 py-3 xl:py-4'>{item.fault_code}</td>
                                             <td className='px-4 py-3'>{item.category}</td>
