@@ -9,7 +9,6 @@ function calculatePercentages(data) {
     
     const totalGeneration = solarGeneration + windGeneration + essGeneration + biogasGeneration +  gensetGeneration + mainsGeneration;
 
-    console.log(totalGeneration)
   
   
     let percentages = [  
@@ -21,7 +20,6 @@ function calculatePercentages(data) {
       (gensetGeneration / totalGeneration) * 100 || 0,
     ];
   
-    console.log(percentages)
     const totalPercentage = percentages.reduce((acc, val) => acc + val, 0);
 
     if (totalPercentage !== 100) {
