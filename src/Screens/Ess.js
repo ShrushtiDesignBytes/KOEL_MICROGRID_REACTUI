@@ -45,6 +45,22 @@ const Ess = ({ BaseUrl }) => {
         return () => clearInterval(interval);
     }, []);
 
+    useEffect(() => {
+        updateNeedleRotation(data.soc);
+    }, [data]);
+
+
+    function updateNeedleRotation(value) {
+
+        value = Math.min(Math.max(value, 0), 100);
+
+        const rotation = (value / 100) * 180; 
+
+        const needle = document.querySelector('.four .needle');
+        if (needle) {
+            needle.style.transform = `rotate(${rotation}deg)`;
+        }
+    }
 
     const displayCounts = (data) => {
         const essData = data.filter((i) => i.category === 'ess');
@@ -172,43 +188,28 @@ const Ess = ({ BaseUrl }) => {
                                 <h5 className="text-[#CACCCC] text-lg xl:text-xl flex">SOC</h5>
                                 <h6 className="text-[#CF967B] text-xl xl:text-2xl">{data.soc}%</h6>
                             </div>
-                            <div className="gauge-wrapper">
-                                <div className="label-text label-0">0</div>
-                                <div className="label-text label-25">25</div>
-                                <div className="label-text label-50">50</div>
-                                <div className="label-text label-75">75</div>
-                                <div className="label-text label-100">100</div>
+                            <div className="inline-block w-auto mx-auto py-[15px] px-[15px] relative">
+                                <div className="absolute text-[0.8em] text-white origin-center top-[80%] left-0 transform -translate-x-1/2 -translate-y-1/2">0</div>
+                                <div className="absolute text-[0.8em] text-white transform-origin-center top-[30%] transform -translate-x-1/2 -translate-y-1/2">25</div>
+                                <div className="absolute text-[0.8em] text-white transform-origin-center top-[4%] left-1/2 transform -translate-x-1/2 -translate-y-1/2">50</div>
+                                <div className="absolute text-[0.8em] text-white transform-origin-center top-[30%] right-0 transform -translate-x-1/2 -translate-y-1/2">75</div>
+                                <div className="absolute text-[0.8em] text-white transform-origin-center top-[80%] right-0 transform translate-x-1/2 -translate-y-1/2">100</div>
 
-                                <div className={`gauge four ${data.soc >= 90
-                                    ? 'rischio4'
-                                    : data.soc >= 80
-                                        ? 'rischio44'
-                                        : data.soc >= 75
-                                            ? 'rischio3'
-                                            : data.soc > 60
-                                                ? 'rischio33'
-                                                : data.soc >= 50
-                                                    ? 'rischio2'
-                                                    : data.soc > 30
-                                                        ? 'rischio22'
-                                                        : data.soc >= 25
-                                                            ? 'rischio1'
-                                                            : 'rischio11'
-                                    }`}>
-                                    <div className="slice-colors">
-                                        <div className="st slice-item"></div>
-                                        <div className="st slice-item"></div>
-                                        <div className="st slice-item"></div>
-                                        <div className="st slice-item"></div>
-                                        <div className="color-label high">High</div>
-                                        <div className="color-label medium">Medium</div>
-                                        <div className="color-label low">Low</div>
+                                <div className={`bg-[#e7e7e7] shadow-[0_-3px_6px_2px_rgba(0,_0,_0,_0.5)] w-[10vw] h-[6vw] rounded-t-full relative overflow-hidden four rischio`}>
+                                    <div className="slice-colors h-full relative">
+                                        <div className="st slice-item absolute bottom-0 w-0 h-0 border-[2.5vw] border-transparent"></div>
+                                        <div className="st slice-item absolute bottom-0 w-0 h-0 border-[2.5vw] border-transparent"></div>
+                                        <div className="st slice-item absolute bottom-0 w-0 h-0 border-[2.5vw] border-transparent"></div>
+                                        <div className="st slice-item absolute bottom-0 w-0 h-0 border-[2.5vw] border-transparent"></div>
+                                        <div className="absolute text-[1.3vh] text-center z-10 top-[70%] right-[12%] transform translate-x-[50%] translate-y-[-50%] font-semibold text-black">High</div>
+                                        <div className="absolute text-[1.3vh] text-center z-10 bottom-[75%] left-[49%] transform translate-x-[-50%] translate-y-[50%] font-semibold text-black">Medium</div>
+                                        <div className="absolute text-[1.3vh] text-center z-10 top-[70%] left-[12%] transform translate-x-[-50%] translate-y-[-50%] font-semibold text-black">Low</div>
                                     </div>
 
-                                    <div className="gauge-center">
+                                    <div className="text-sm text-opacity-60 text-center mt-4 absolute w-[60%] h-[60%] bg-white rounded-t-[100px] shadow-[0_-8px_10px_-7px_rgba(0,0,0,0.38)] right-[21%] bottom-0 z-[10]">
                                         <div className="needle"></div>
-                                        <div className="label"></div>
-                                        <div className="number"></div>
+                                        <div className="text-sm text-opacity-60 text-center mt-4 mb-1"></div>
+                                        <div className="text-lg text-center text-opacity-60 mt-4 mb-1"></div>
                                     </div>
                                 </div>
                             </div>
