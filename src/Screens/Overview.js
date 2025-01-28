@@ -371,7 +371,7 @@ const Overview = ({ BaseUrl, Url }) => {
                                 <img
                                     src={image.src}
                                     alt={image.label}
-                                    className="object-cover rounded-lg w-full h-full"
+                                    className="object-cover rounded-lg w-full h-[330px]"
                                     onLoad={handleImageLoad}
                                     onError={handleImageError}
                                 />
